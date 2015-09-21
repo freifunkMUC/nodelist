@@ -106,7 +106,7 @@
 				async: false
 			}).responseJSON.batadv;
 			
-			var enums = {gateways: {}, versions: {}, models: {}};
+			var enums = {gateways: {}, versions: {}, models: {}, sites: {}};
 			
 			$.each(rawNodes, function(i, node){
 				if(typeof node.nodeinfo == undefined) {
@@ -189,6 +189,11 @@
 				row.firstSeen = moment.utc(node.firstseen).local().toDate();
 				row.lastSeen = moment.utc(node.lastseen).local().toDate();
 				
+				if(typeof ni.system != "undefined") {
+					row.site = ni.system.site_code;
+					enums.sites[row.site] = true;
+				}
+				
 				records.push(row);
 			});
 			
@@ -224,6 +229,7 @@
 				{ resizable: true, sortable: true, field: 'autoupdater' , caption: 'Updates'     , size: '100px'},
 				{ resizable: true, sortable: true, field: 'clients'     , caption: 'Clients'     , size: '50px', style: 'text-align: right;'},
 				{ resizable: true, sortable: true, field: 'gateway'     , caption: 'Gateway'     , size: '50px', style: 'text-align: right;'},
+				{ resizable: true, sortable: true, field: 'site'        , caption: 'Site'        , size: '50px'},
 				{ resizable: true, sortable: true, field: 'uptime'      , caption: 'Uptime'      , size: '80px', render: 'age'},
 				{ resizable: true, sortable: true, field: 'firstSeen'   , caption: 'First seen'  , size: '80px', render: 'age'},
 				{ resizable: true, sortable: true, field: 'lastSeen'    , caption: 'Last seen'   , size: '80px', render: 'age'},
@@ -266,15 +272,16 @@
 					{field: 'owner'       , caption: 'Owner', type: 'text'},
 					{field: 'version'     , caption: 'Gluon Version', type: 'enum', options: {items: Object.keys(enums.versions)}},
 					{field: 'model'       , caption: 'Hardware model', type: 'enum', options: {items: Object.keys(enums.models)}},
-					{field: 'nproc'       , caption: '# proc', type: 'int', options: {min: 0}},
-					{field: 'autoupdater' , caption: 'Updates', intTag: 'Off/stable/experimental', type: 'enum', options: {items: ["Off", "stable", "experimental"]}},
-					{field: 'clients'     , caption: '# clients', type: 'int', options: {min: 0}},
-					{field: 'gateway'     , caption: 'Gateway', type: 'enum', options: {items: Object.keys(enums.gateways)}},
-					{field: 'uptime'      , caption: 'Uptime', type: 'float'},
-					{field: 'firstSeen'   , caption: 'First seen', type: 'date'},
-					{field: 'lastSeen'    , caption: 'Last seen', type: 'date'},
-					{field: 'rootfsUsage' , caption: 'Root FS usage', outTag: '%', type: 'percent'},
-					{field: 'memoryUsage' , caption: 'Memory usage', outTag: '%', type: 'percent'},
+					{field: 'nproc'       , caption: '# proc'        , type: 'int', options: {min: 0}},
+					{field: 'autoupdater' , caption: 'Updates'       , type: 'enum', options: {items: ["Off", "stable", "experimental"]}},
+					{field: 'clients'     , caption: '# clients'     , type: 'int', options: {min: 0}},
+					{field: 'gateway'     , caption: 'Gateway'       , type: 'enum', options: {items: Object.keys(enums.gateways)}},
+					{field: 'site'        , caption: 'Site'          , type: 'enum', options: {items: Object.keys(enums.sites)}},
+					{field: 'uptime'      , caption: 'Uptime'        , type: 'float'},
+					{field: 'firstSeen'   , caption: 'First seen'    , type: 'date'},
+					{field: 'lastSeen'    , caption: 'Last seen'     , type: 'date'},
+					{field: 'rootfsUsage' , caption: 'Root FS usage' , type: 'percent', outTag: '%'},
+					{field: 'memoryUsage' , caption: 'Memory usage'  , type: 'percent', outTag: '%'},
 				],
 				onExpand: function (event) {
 					if (w2ui.hasOwnProperty('subgrid-' + event.recid)) w2ui['subgrid-' + event.recid].destroy();

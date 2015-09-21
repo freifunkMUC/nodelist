@@ -88,8 +88,8 @@
 			w2popup.lock('Loading', true);
 			var rawNodes = $.ajax({
 				type: 'GET',
-				//url: '../data/nodes.json', // Live
-				url: 'nodes.json', // Test
+				url: '../data/nodes.json', // Live
+				//url: 'nodes.json', // Test
 				dataType: 'json',
 				success: function() { },
 				data: {},
@@ -98,8 +98,8 @@
 			
 			var rawGraph = $.ajax({
 				type: 'GET',
-				//url: '../data/graph.json', // Live
-				url: 'graph.json', // Test
+				url: '../data/graph.json', // Live
+				//url: 'graph.json', // Test
 				dataType: 'json',
 				success: function() { },
 				data: {},
@@ -265,12 +265,12 @@
 				searches: [
 		//			{field: 'isOnline'    , caption: 'Is online?'},
 		//			{field: 'isGateway'   , caption: 'Is gateway?', type: 'combo', options: {items: [true, false]}},
-					{field: 'vpnCnt'      , caption: 'VPNs', type: 'int', options: {min: 0}},
-					{field: 'neighbourCnt', caption: 'Links', type: 'int', options: {min: 0}},
-					{field: 'id'          , caption: 'Node ID', type: 'text'},
-					{field: 'hostname'    , caption: 'Hostname', type: 'text'},
-					{field: 'owner'       , caption: 'Owner', type: 'text'},
-					{field: 'version'     , caption: 'Gluon Version', type: 'enum', options: {items: Object.keys(enums.versions)}},
+					{field: 'vpnCnt'      , caption: 'VPNs'          , type: 'int', options: {min: 0}},
+					{field: 'neighbourCnt', caption: 'Links'         , type: 'int', options: {min: 0}},
+					{field: 'id'          , caption: 'Node ID'       , type: 'text'},
+					{field: 'hostname'    , caption: 'Hostname'      , type: 'text'},
+					{field: 'owner'       , caption: 'Owner'         , type: 'text'},
+					{field: 'version'     , caption: 'Gluon Version' , type: 'enum', options: {items: Object.keys(enums.versions)}},
 					{field: 'model'       , caption: 'Hardware model', type: 'enum', options: {items: Object.keys(enums.models)}},
 					{field: 'nproc'       , caption: '# proc'        , type: 'int', options: {min: 0}},
 					{field: 'autoupdater' , caption: 'Updates'       , type: 'enum', options: {items: ["Off", "stable", "experimental"]}},

@@ -1,0 +1,229 @@
+var records = [];
+var nodes = {};
+var nodeCnt = 0;
+
+// Try this: http://w2ui.com/web/demos/#!grid/grid-5
+w2popup.lock('Loading', true);
+var rawNodes = $.ajax({
+	type: 'GET',
+	//url: '../data/nodes.json', // Live
+	url: 'nodes.json', // Test
+	dataType: 'json',
+	success: function() { },
+	data: {},
+	async: false,
+}).responseJSON.nodes;
+
+var rawGraph = $.ajax({
+	type: 'GET',
+	//url: '../data/graph.json', // Live
+	url: 'graph.json', // Test
+	dataType: 'json',
+	success: function() { },
+	data: {},
+	async: false,
+}).responseJSON.batadv;
+
+var enums = {gateways: {}, versions: {}, models: {}, sites: {}};
+
+$.each(rawNodes, function(i, node){
+	if(typeof node.nodeinfo == undefined) {
+		//console.log('Useless node:', node);
+		return;
+	}
+	if(i in nodes) {
+		//console.log('Duplicate node:', nodes[i], node);
+		return;
+	}
+	nodes[i] = node;
+	nodes[i].recid = nodeCnt++;
+	nodes[i].vpns = [];
+	nodes[i].neighbours = [];
+});
+
+$.each(rawGraph.links, function(i, link) {
+	var srcId = rawGraph.nodes[link.source].node_id;
+	var dstId = rawGraph.nodes[link.target].node_id;
+	
+	if(!(srcId in nodes && dstId in nodes)) {
+		return;
+	}
+	
+	delete link.source;
+	delete link.target;
+	link.src = nodes[srcId].recid;
+	link.dst = nodes[dstId].recid;
+	
+	if(link.vpn) {
+		nodes[srcId].vpns.push(link);
+		nodes[dstId].vpns.push(link);
+	}
+	else {
+		nodes[srcId].neighbours.push(link);
+		nodes[dstId].neighbours.push(link);
+	}
+});
+
+$.each(nodes, function(i, node){
+	var ni = node.nodeinfo;
+	var row = {id: i, recid: node.recid, node: node};
+	
+	row.isOnline = node.flags.online;
+	row.isGateway = node.flags.gateway;
+	row.vpnCnt = node.vpns.length;
+	row.neighbourCnt = node.neighbours.length;
+	row.hasVpn = row.vpnCnt > 0;
+	row.hasNeighbour = row.neighbourCnt > 0;
+	if(row.isOnline == false) {
+		row.style = 'background: #ff0000;'
+	}
+	row.hostname = ni.hostname;
+	if(typeof ni.hardware != 'undefined') {
+		row.model = ni.hardware.model;
+		row.nproc = ni.hardware.nproc;
+		enums.models[row.model] = true;
+	}
+	if(typeof ni.software != 'undefined') {
+		var sw = ni.software;
+		if(typeof sw.autoupdater != 'undefined') {
+			row.autoupdater = sw.autoupdater.enabled ? sw.autoupdater.branch : 'Off';
+		}
+		row.version = sw.firmware.release;
+		enums.versions[row.version] = true;
+	}
+	row.owner = typeof ni.owner != 'undefined' ? ni.owner.contact : undefined;
+	if(typeof node.statistics != 'undefined') {
+		var stats = node.statistics;
+		row.clients = stats.clients;
+		row.gateway = stats.gateway;
+		enums.gateways[row.gateway] = true;
+		if(row.isOnline) {
+			row.uptime = moment().subtract(stats.uptime, 'seconds').toDate();
+		}
+		row.rootfsUsage = typeof stats.rootfs_usage != 'undefined' ? stats.rootfs_usage*100 : undefined;
+		row.memoryUsage = typeof stats.memory_usage != 'undefined' ? stats.memory_usage*100 : undefined;
+	}
+	
+	row.firstSeen = moment.utc(node.firstseen).local().toDate();
+	row.lastSeen = moment.utc(node.lastseen).local().toDate();
+	
+	if(typeof ni.system != 'undefined') {
+		row.site = ni.system.site_code;
+		enums.sites[row.site] = true;
+	}
+	
+	records.push(row);
+});
+
+var renderBool = function(record, ind, col_ind) {
+	var val = record[this.columns[col_ind].field];
+	if(typeof val == 'undefined') return;
+	return val ? '&#x2714;' : '&#x2718;';
+}
+
+var renderPercent = function(record, ind, col_ind) {
+	var val = record[this.columns[col_ind].field];
+	if(typeof val == 'undefined') return;
+	
+	return '<div style="position: absolute; left: 0px; top:2px; right: 0px; bottom: 2px; padding: 0px;">' +
+	       '    <div style="background: linear-gradient(to right, rgba(129,181,234,1) 0%,rgba(202,223,246,1) 100%); height: 100`%; width:'+val+'%; overflow: hidden;"></div>' +
+	       '</div>' +
+	       '<div style="position: relative;">'+val.toFixed(1)+'%</div>';
+}
+
+var cols = [
+	{ resizable: true, sortable: true, field: 'isOnline'    , caption: 'Online'      , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
+	{ resizable: true, sortable: true, field: 'isGateway'   , caption: 'Gateway'     , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
+	{ resizable: true, sortable: true, field: 'hasVpn'      , caption: 'VPN?'        , size: '40px', render: renderBool, style: 'text-align: center;'},
+	{ resizable: true, sortable: true, field: 'hasNeighbour', caption: 'Link?'       , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
+	{ resizable: true, sortable: true, field: 'vpnCnt'      , caption: 'VPNs'        , size: '50px', style: 'text-align: right;', hidden: true},
+	{ resizable: true, sortable: true, field: 'neighbourCnt', caption: 'Links'       , size: '50px', style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'id'          , caption: 'Node ID'     , size: '100px', style: 'font-family: monospace;'},
+	{ resizable: true, sortable: true, field: 'hostname'    , caption: 'Hostname'    , size: '10%'},
+	{ resizable: true, sortable: true, field: 'owner'       , caption: 'Owner'       , size: '10%'},
+	{ resizable: true, sortable: true, field: 'version'     , caption: 'Gluon Vers.' , size: '150px'},
+	{ resizable: true, sortable: true, field: 'model'       , caption: 'HW model'    , size: '10%'},
+	{ resizable: true, sortable: true, field: 'nproc'       , caption: 'Procs'       , size: '50px', style: 'text-align: right;', hidden: true},
+	{ resizable: true, sortable: true, field: 'autoupdater' , caption: 'Updates'     , size: '100px'},
+	{ resizable: true, sortable: true, field: 'clients'     , caption: 'Clients'     , size: '50px', style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'gateway'     , caption: 'Gateway'     , size: '50px', style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'site'        , caption: 'Site'        , size: '50px'},
+	{ resizable: true, sortable: true, field: 'uptime'      , caption: 'Uptime'      , size: '80px', render: 'age'},
+	{ resizable: true, sortable: true, field: 'firstSeen'   , caption: 'First seen'  , size: '80px', render: 'age'},
+	{ resizable: true, sortable: true, field: 'lastSeen'    , caption: 'Last seen'   , size: '80px', render: 'age'},
+	{ resizable: true, sortable: true, field: 'rootfsUsage' , caption: '% root'      , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},
+	{ resizable: true, sortable: true, field: 'memoryUsage' , caption: '% Mem'       , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},
+];
+
+$('#grid').w2grid({
+	name: 'grid',
+	header: 'Freifunk M&uuml;nchen Knotenliste',
+	show: {
+		header:        true,
+		toolbar:       true,
+		toolbarReload: false,
+		footer:        true,
+		lineNumbers:   true,
+	},
+	toolbar: {
+		items: [
+			{ type: 'spacer' },
+			{ type: 'button', id: 'about', caption: 'About', icon: 'w2ui-icon-question' },
+		],
+		onClick: function (target, data) {
+			if(target == 'about') {
+				$('#about-popup').w2popup();
+			}
+		},
+	},
+	multiSelect: false,
+	reorderColumns: true,
+	records: records,
+	columns: cols,
+	searches: [
+//			{field: 'isOnline'    , caption: 'Is online?'},
+//			{field: 'isGateway'   , caption: 'Is gateway?', type: 'combo', options: {items: [true, false]}},
+		{field: 'vpnCnt'      , caption: 'VPNs'          , type: 'int', options: {min: 0}},
+		{field: 'neighbourCnt', caption: 'Links'         , type: 'int', options: {min: 0}},
+		{field: 'id'          , caption: 'Node ID'       , type: 'text'},
+		{field: 'hostname'    , caption: 'Hostname'      , type: 'text'},
+		{field: 'owner'       , caption: 'Owner'         , type: 'text'},
+		{field: 'version'     , caption: 'Gluon Version' , type: 'enum', options: {items: Object.keys(enums.versions)}},
+		{field: 'model'       , caption: 'Hardware model', type: 'enum', options: {items: Object.keys(enums.models)}},
+		{field: 'nproc'       , caption: '# proc'        , type: 'int', options: {min: 0}},
+		{field: 'autoupdater' , caption: 'Updates'       , type: 'enum', options: {items: ['Off', 'stable', 'experimental']}},
+		{field: 'clients'     , caption: '# clients'     , type: 'int', options: {min: 0}},
+		{field: 'gateway'     , caption: 'Gateway'       , type: 'enum', options: {items: Object.keys(enums.gateways)}},
+		{field: 'site'        , caption: 'Site'          , type: 'enum', options: {items: Object.keys(enums.sites)}},
+		{field: 'uptime'      , caption: 'Uptime'        , type: 'float'},
+		{field: 'firstSeen'   , caption: 'First seen'    , type: 'date'},
+		{field: 'lastSeen'    , caption: 'Last seen'     , type: 'date'},
+		{field: 'rootfsUsage' , caption: 'Root FS usage' , type: 'percent', outTag: '%'},
+		{field: 'memoryUsage' , caption: 'Memory usage'  , type: 'percent', outTag: '%'},
+	],
+	onExpand: function (event) {
+		if (w2ui.hasOwnProperty('subgrid-' + event.recid)) w2ui['subgrid-' + event.recid].destroy();
+		$('#'+ event.box_id).css({ margin: '0px', padding: '0px', width: '100%' }).animate({ height: '105px' }, 100);
+		setTimeout(function () {
+			subRecords = [];
+			
+			$.each(records[event.recid].node.neighbours, function(i, link) {
+				subRecords.push(records[event.recid == link.src ? link.dst : link.src]);
+			});
+			
+			$('#'+ event.box_id).w2grid({
+				name: 'subgrid-' + event.recid, 
+				show: { columnHeaders: false },
+				fixedBody: true,
+				columns: cols,
+				records: subRecords,
+			});
+			w2ui['subgrid-' + event.recid].resize();
+		}, 300);
+	},
+	onDblClick: function(event) {
+		window.open('https://onmars.eu/ffmuc/map/#!v:m;n:'+records[event.recid].id, '_blank');
+	},
+});
+
+w2popup.unlock();

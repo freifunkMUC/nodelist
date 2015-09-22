@@ -1,0 +1,8 @@
+{
+  "name": "nodelist",
+  "private": true,
+  "dependencies": {
+    "moment": "~2.10.6",
+    "w2ui": "https://github.com/Skrupellos/w2ui-dist.git#d0299e9694dbabb8d9a29765cadee22474cde3f0"
+  }
+}

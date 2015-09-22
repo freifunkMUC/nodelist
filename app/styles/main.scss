@@ -1,0 +1,28 @@
+// bower:scss
+// endbower
+
+html, body, #grid {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+
+tr.w2ui-odd[style*="background: #ff0000"] {
+	background: #ffadad !important;
+}
+
+
+tr.w2ui-even[style*="background: #ff0000"] {
+	background: #faaaaa !important;
+}
+
+
+td.w2ui-grid-data div[title="0"] {
+	color: #888;
+}
+
+
+.w2ui-icon-question:before {
+	content: "?";
+}

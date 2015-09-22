@@ -1,12 +1,32 @@
 # nodelist-ffm
 [Freifunk München](https://github.com/freifunkMUC) node list
 
+## Build
+If you are a web dev wiz, you could probably go with:
+```
+npm install
+bower install
+grunt
+```
+
+All others creatures probably want to install `npm` with their favourite distro's package manager.
+This program can sometimes be found in the `nodejs` package.
+After that, they can run the following:
+```
+npm install
+npm install bower grunt-cli
+node_modules/.bin/bower install
+node_modules/.bin/grunt
+```
+
+During development. `grunt serve` resp. `node_modules/.bin/grunt serve` comes in handy.
+
 ## ToDo
 - [X] Procrastinate
 - [ ] Wait for w2ui 1.4.3 successor release (includes bug fix)
-- [ ] Use bower for libs
+- [X] Use bower for libs
 - [ ] Use site configuration file
-- [ ] Use grunt/what ever to compile everything into one small file
+- [X] Use grunt/what ever to compile everything into one small file
 - [ ] More columns
   - [ ] Link Quality
   - [ ] IPs (with links)
@@ -15,6 +35,7 @@
 - [ ] Honour libs in about
 - [ ] Async data loading
 - [ ] Automatic/manual reloading
+- [ ] Freifunk design
 
 ## Contribute
 Please try to stick to the coding style.

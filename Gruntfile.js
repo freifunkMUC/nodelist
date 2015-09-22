@@ -2,47 +2,35 @@
 // generator-webapp 1.1.0
 'use strict';
 
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// If you want to recursively match all subfolders, use:
-// 'test/spec/**/*.js'
-
 module.exports = function (grunt) {
-
-	// Time how long tasks take. Can help when optimizing build times
-	require('time-grunt')(grunt);
-
 	// Automatically load required grunt tasks
 	require('jit-grunt')(grunt, {
 		useminPrepare: 'grunt-usemin',
+		bower: 'grunt-bower-task',
 	});
-
+	
 	// Configurable paths
 	var config = {
 		app: 'app',
 		dist: 'dist',
 	};
-
+	
 	// Define the configuration for all the tasks
 	grunt.initConfig({
-
+		pkg: grunt.file.readJSON('package.json'),
+		
 		// Project settings
 		config: config,
-
+		
 		// Watches files for changes and runs tasks based on the changed files
 		watch: {
 			bower: {
 				files: ['bower.json'],
-				tasks: ['wiredep'],
+				tasks: ['bower', 'wiredep'],
 			},
 			babel: {
 				files: ['<%= config.app %>/scripts/{,*/}*.js'],
 				tasks: ['babel:dist'],
-			},
-			babelTest: {
-				files: ['test/spec/{,*/}*.js'],
-				tasks: ['babel:test', 'test:watch'],
 			},
 			gruntfile: {
 				files: ['Gruntfile.js'],
@@ -56,15 +44,15 @@ module.exports = function (grunt) {
 				tasks: ['newer:copy:styles', 'postcss'],
 			},
 		},
-
+		
+		
 		browserSync: {
 			options: {
-				notify: false,
 				background: true,
-				watchOptions: {
-					ignored: '',
-				},
+				open: false,
+				watchOptions: { ignored: '' },
 			},
+			
 			livereload: {
 				options: {
 					files: [
@@ -82,10 +70,10 @@ module.exports = function (grunt) {
 					},
 				},
 			},
+			
 			test: {
 				options: {
 					port: 9001,
-					open: false,
 					logLevel: 'silent',
 					host: 'localhost',
 					server: {
@@ -96,6 +84,7 @@ module.exports = function (grunt) {
 					},
 				},
 			},
+			
 			dist: {
 				options: {
 					background: false,
@@ -103,7 +92,8 @@ module.exports = function (grunt) {
 				},
 			},
 		},
-
+		
+		
 		// Empties folders to start fresh
 		clean: {
 			dist: {
@@ -116,9 +106,11 @@ module.exports = function (grunt) {
 					],
 				}],
 			},
+			
 			server: '.tmp',
 		},
-
+		
+		
 		// Make sure code styles are up to par and there are no obvious mistakes
 		eslint: {
 			target: [
@@ -223,7 +215,54 @@ module.exports = function (grunt) {
 		// additional tasks can operate on them
 		useminPrepare: {
 			options: {
+				root: ['.tmp/', 'app/', '.'],
 				dest: '<%= config.dist %>',
+				flow: {
+					steps: {
+						js: ['concat', 'uglifyjs'],
+						css: ['concat', 'cssmin'],
+					},
+					post: {
+						js: [
+							{
+								name: 'concat',
+								createConfig: function (context, block) {
+									context.options.generated.options = {
+										sourceMap: true,
+									};
+								},
+							},
+							{
+								name: 'uglify',
+								createConfig: function (context, block) {
+									context.options.generated.options = {
+										banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+										sourceMapIn: '.tmp/concat/' + block.dest.replace('.js', '.js.map'),
+										sourceMap: true,
+									};
+								},
+							},
+						],
+						css: [
+							{
+								name: 'concat',
+								createConfig: function (context, block) {
+									context.options.generated.options = {
+										sourceMap: true,
+									};
+								},
+							},
+							{
+								name: 'cssmin',
+								createConfig: function (context, block) {
+									context.options.generated.options = {
+										sourceMap: true,
+									};
+								},
+							},
+						],
+					},
+				},
 			},
 			html: '<%= config.app %>/index.html',
 		},
@@ -287,31 +326,7 @@ module.exports = function (grunt) {
 			},
 		},
 
-		// By default, your `index.html`'s <!-- Usemin block --> will take care
-		// of minification. These next options are pre-configured if you do not
-		// wish to use the Usemin blocks.
-		// cssmin: {
-		//	 dist: {
-		//		 files: {
-		//			 '<%= config.dist %>/styles/main.css': [
-		//				 '.tmp/styles/{,*/}*.css',
-		//				 '<%= config.app %>/styles/{,*/}*.css'
-		//			 ]
-		//		 }
-		//	 }
-		// },
-		// uglify: {
-		//	 dist: {
-		//		 files: {
-		//			 '<%= config.dist %>/scripts/scripts.js': [
-		//				 '<%= config.dist %>/scripts/scripts.js'
-		//			 ]
-		//		 }
-		//	 }
-		// },
-		// concat: {
-		//	 dist: {}
-		// },
+
 
 		// Copies remaining files to places other tasks can use
 		copy: {
@@ -322,10 +337,9 @@ module.exports = function (grunt) {
 					cwd: '<%= config.app %>',
 					dest: '<%= config.dist %>',
 					src: [
-						'*.{ico,png,txt}',
-						'images/{,*/}*.webp',
-						'{,*/}*.html',
-						'styles/fonts/{,*/}*.*',
+						'**',
+						'!scripts/**',
+						'!styles/**',
 					],
 				}],
 			},
@@ -347,11 +361,30 @@ module.exports = function (grunt) {
 				'svgmin',
 			],
 		},
+		
+		compress: {
+			main: {
+				options: {
+					mode: 'gzip'
+				},
+				files: [{
+					expand: true,
+					cwd: 'dist',
+					src: ['**', '!**/*.gzip'],
+					dest: 'dist/',
+					rename: function(dest, src) { return dest + src + '.gz'; }
+				}]
+			}
+		},
+		
+		
+		bower: {
+			install: {},
+		},
 	});
 
 
 	grunt.registerTask('serve', 'start the server and preview your app', function (target) {
-
 		if (target === 'dist') {
 			return grunt.task.run(['build', 'browserSync:dist']);
 		}
@@ -388,17 +421,19 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', [
 		'clean:dist',
-		'wiredep',
-		'useminPrepare',
-		'concurrent:dist',
-		'postcss',
-		'concat',
-		'cssmin',
-		'uglify',
-		'copy:dist',
-		'filerev',
-		'usemin',
+		'bower',
+		'wiredep',         // Merge includes from bower libs (js/css) into html
+		'concurrent:dist', // Minimize app's svgs/images and convert app's ES6-js/scss to legacy-js/css
+		'copy:dist',       // Copy app's files to dist
+		'useminPrepare',   // Create concat, cssmin and uglify tasks
+		'postcss',         // ???
+		'concat',          // Concatenate generated and lib's js/css
+		'cssmin',          // Minify css
+		'uglify',          // Minify js
+		'filerev',         // ???
+		'usemin',          // 
 		'htmlmin',
+		'compress',
 	]);
 
 	grunt.registerTask('default', [

@@ -28,3 +28,6 @@ node_modules
 
 /app/nodes.json
 /app/graph.json
+/bower_components/
+/.tmp/
+/dist/

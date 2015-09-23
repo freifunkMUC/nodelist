@@ -38,4 +38,4 @@ Please try to stick to the coding style.
 
 Don't hesitate to send a pull request. Seriously. Just do it!
 
-Questions? Ask [Skruppy](https://github.com/Skruppy).
+Questions? Ask [Skruppy](https://github.com/Skrupellos).

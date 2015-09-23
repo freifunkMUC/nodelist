@@ -30,6 +30,7 @@ During development. `npm run serve` comes in handy.
 - [ ] Automatic/manual reloading
 - [ ] Freifunk design
 - [ ] Use JS Modules
+- [ ] Make default visibility of columns configurable
 
 
 ## Contribute

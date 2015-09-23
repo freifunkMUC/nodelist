@@ -1,0 +1,7 @@
+// Copy to app/scripts/config.js
+
+nodelistconfig = {
+	'dataPath': 'https://ffmuc.net/data/',
+	'mapPath': 'https://ffmuc.net/map/',
+	'siteName': 'Freifunk München',
+};

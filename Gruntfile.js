@@ -6,21 +6,16 @@ module.exports = function (grunt) {
 	// Automatically load required grunt tasks
 	require('jit-grunt')(grunt, {
 		useminPrepare: 'grunt-usemin',
-		bower: 'grunt-bower-task',
+		'bower-install-simple': 'grunt-bower-install-simple',
+		'replace': 'grunt-text-replace',
 	});
 	
-	// Configurable paths
-	var config = {
-		app: 'app',
-		dist: 'dist',
-	};
+	
 	
 	// Define the configuration for all the tasks
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		
-		// Project settings
-		config: config,
+		//config: require('./app/scripts/config.js'),
 		
 		// Watches files for changes and runs tasks based on the changed files
 		watch: {
@@ -29,18 +24,19 @@ module.exports = function (grunt) {
 				tasks: ['bower', 'wiredep'],
 			},
 			babel: {
-				files: ['<%= config.app %>/scripts/{,*/}*.js'],
+				files: ['app/scripts/{,*/}*.js'],
 				tasks: ['babel:dist'],
 			},
 			gruntfile: {
 				files: ['Gruntfile.js'],
+				tasks: ['newer:eslint'],
 			},
 			sass: {
-				files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+				files: ['app/styles/{,*/}*.{scss,sass}'],
 				tasks: ['sass', 'postcss'],
 			},
 			styles: {
-				files: ['<%= config.app %>/styles/{,*/}*.css'],
+				files: ['app/styles/{,*/}*.css'],
 				tasks: ['newer:copy:styles', 'postcss'],
 			},
 		},
@@ -56,28 +52,14 @@ module.exports = function (grunt) {
 			livereload: {
 				options: {
 					files: [
-						'<%= config.app %>/{,*/}*.html',
+						'app/{,*/}*.html',
 						'.tmp/styles/{,*/}*.css',
-						'<%= config.app %>/images/{,*/}*',
+						'app/images/{,*/}*',
 						'.tmp/scripts/{,*/}*.js',
 					],
 					port: 9000,
 					server: {
-						baseDir: ['.tmp', config.app],
-						routes: {
-							'/bower_components': './bower_components',
-						},
-					},
-				},
-			},
-			
-			test: {
-				options: {
-					port: 9001,
-					logLevel: 'silent',
-					host: 'localhost',
-					server: {
-						baseDir: ['.tmp', './test', config.app],
+						baseDir: ['.tmp', 'app'],
 						routes: {
 							'/bower_components': './bower_components',
 						},
@@ -88,7 +70,7 @@ module.exports = function (grunt) {
 			dist: {
 				options: {
 					background: false,
-					server: '<%= config.dist %>',
+					server: 'dist',
 				},
 			},
 		},
@@ -101,8 +83,8 @@ module.exports = function (grunt) {
 					dot: true,
 					src: [
 						'.tmp',
-						'<%= config.dist %>/*',
-						'!<%= config.dist %>/.git*',
+						'dist/*',
+						'!dist/.git*',
 					],
 				}],
 			},
@@ -115,12 +97,14 @@ module.exports = function (grunt) {
 		eslint: {
 			target: [
 				'Gruntfile.js',
-				'<%= config.app %>/scripts/{,*/}*.js',
-				'!<%= config.app %>/scripts/vendor/*',
+				'app/scripts/{,*/}*.js',
+				'!app/scripts/vendor/*',
 				'test/spec/{,*/}*.js',
 			],
 		},
-
+		
+		
+		// @ToDo Hm, it doesn't help with require and modules. Needed?
 		// Compiles ES6 with Babel
 		babel: {
 			options: {
@@ -129,7 +113,7 @@ module.exports = function (grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>/scripts',
+					cwd: 'app/scripts',
 					src: '{,*/}*.js',
 					dest: '.tmp/scripts',
 					ext: '.js',
@@ -145,7 +129,8 @@ module.exports = function (grunt) {
 				}],
 			},
 		},
-
+		
+		
 		// Compiles Sass to CSS and generates necessary files if requested
 		sass: {
 			options: {
@@ -157,14 +142,15 @@ module.exports = function (grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>/styles',
+					cwd: 'app/styles',
 					src: ['*.{scss,sass}'],
 					dest: '.tmp/styles',
 					ext: '.css',
 				}],
 			},
 		},
-
+		
+		
 		postcss: {
 			options: {
 				map: true,
@@ -184,39 +170,42 @@ module.exports = function (grunt) {
 				}],
 			},
 		},
-
+		
+		
 		// Automatically inject Bower components into the HTML file
 		wiredep: {
 			app: {
-				src: ['<%= config.app %>/index.html'],
+				src: ['app/index.html'],
 				ignorePath: /^(\.\.\/)*\.\./,
 			},
 			sass: {
-				src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+				src: ['app/styles/{,*/}*.{scss,sass}'],
 				ignorePath: /^(\.\.\/)+/,
 			},
 		},
-
+		
+		
 		// Renames files for browser caching purposes
 		filerev: {
 			dist: {
 				src: [
-					'<%= config.dist %>/scripts/{,*/}*.js',
-					'<%= config.dist %>/styles/{,*/}*.css',
-					'<%= config.dist %>/images/{,*/}*.*',
-					'<%= config.dist %>/styles/fonts/{,*/}*.*',
-					'<%= config.dist %>/*.{ico,png}',
+					'dist/scripts/{,*/}*.js',
+					'dist/styles/{,*/}*.css',
+					'dist/images/{,*/}*.*',
+					'dist/styles/fonts/{,*/}*.*',
+					'dist/*.{ico,png}',
 				],
 			},
 		},
-
+		
+		
 		// Reads HTML for usemin blocks to enable smart builds that automatically
 		// concat, minify and revision files. Creates configurations in memory so
 		// additional tasks can operate on them
 		useminPrepare: {
 			options: {
 				root: ['.tmp/', 'app/', '.'],
-				dest: '<%= config.dist %>',
+				dest: 'dist',
 				flow: {
 					steps: {
 						js: ['concat', 'uglifyjs'],
@@ -264,45 +253,49 @@ module.exports = function (grunt) {
 					},
 				},
 			},
-			html: '<%= config.app %>/index.html',
+			html: 'app/index.html',
 		},
-
+		
+		
 		// Performs rewrites based on rev and the useminPrepare configuration
 		usemin: {
 			options: {
 				assetsDirs: [
-					'<%= config.dist %>',
-					'<%= config.dist %>/images',
-					'<%= config.dist %>/styles',
+					'dist',
+					'dist/images',
+					'dist/styles',
 				],
 			},
-			html: ['<%= config.dist %>/{,*/}*.html'],
-			css: ['<%= config.dist %>/styles/{,*/}*.css'],
+			html: ['dist/{,*/}*.html'],
+			css: ['dist/styles/{,*/}*.css'],
 		},
-
+		
+		
 		// The following *-min tasks produce minified files in the dist folder
 		imagemin: {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>/images',
+					cwd: 'app/images',
 					src: '{,*/}*.{gif,jpeg,jpg,png}',
-					dest: '<%= config.dist %>/images',
+					dest: 'dist/images',
 				}],
 			},
 		},
-
+		
+		
 		svgmin: {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: '<%= config.app %>/images',
+					cwd: 'app/images',
 					src: '{,*/}*.svg',
-					dest: '<%= config.dist %>/images',
+					dest: 'dist/images',
 				}],
 			},
 		},
-
+		
+		
 		htmlmin: {
 			dist: {
 				options: {
@@ -319,23 +312,22 @@ module.exports = function (grunt) {
 				},
 				files: [{
 					expand: true,
-					cwd: '<%= config.dist %>',
+					cwd: 'dist',
 					src: '{,*/}*.html',
-					dest: '<%= config.dist %>',
+					dest: 'dist',
 				}],
 			},
 		},
-
-
-
+		
+		
 		// Copies remaining files to places other tasks can use
 		copy: {
 			dist: {
 				files: [{
 					expand: true,
 					dot: true,
-					cwd: '<%= config.app %>',
-					dest: '<%= config.dist %>',
+					cwd: 'app',
+					dest: 'dist',
 					src: [
 						'**',
 						'!scripts/**',
@@ -344,101 +336,76 @@ module.exports = function (grunt) {
 				}],
 			},
 		},
-
+		
+		
 		// Run some tasks in parallel to speed up build process
 		concurrent: {
-			server: [
-				'babel:dist',
-				'sass',
-			],
-			test: [
-				'babel',
-			],
-			dist: [
-				'babel',
-				'sass',
-				'imagemin',
-				'svgmin',
-			],
+			server: ['babel:dist', 'sass'],
+			dist:   ['babel'     , 'sass', 'imagemin', 'svgmin'],
 		},
+		
 		
 		compress: {
 			main: {
-				options: {
-					mode: 'gzip'
-				},
 				files: [{
 					expand: true,
 					cwd: 'dist',
-					src: ['**', '!**/*.gzip'],
+					src: ['**'],
 					dest: 'dist/',
-					rename: function(dest, src) { return dest + src + '.gz'; }
-				}]
-			}
+					ext: function(dest, src) { return src + '.gz'; },
+				}],
+			},
 		},
 		
 		
-		bower: {
-			install: {},
+		replace: {
+			main: {
+				src: ['dist/index.html'],
+				overwrite: true,
+				replacements: [
+					//{ from: '__site-name__',  to: '<%- config.siteName %>' },
+					{ from: '__build-date__', to: '<%- grunt.template.today("yyyy-mm-dd") %>' },
+				],
+			},
 		},
+		
+		'bower-install-simple': { install: {} },
 	});
 
 
-	grunt.registerTask('serve', 'start the server and preview your app', function (target) {
-		if (target === 'dist') {
-			return grunt.task.run(['build', 'browserSync:dist']);
-		}
-
-		grunt.task.run([
-			'clean:server',
-			'wiredep',
-			'concurrent:server',
-			'postcss',
-			'browserSync:livereload',
-			'watch',
-		]);
-	});
-
-	grunt.registerTask('server', function (target) {
-		grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-		grunt.task.run([target ? ('serve:' + target) : 'serve']);
-	});
-
-	grunt.registerTask('test', function (target) {
-		if (target !== 'watch') {
-			grunt.task.run([
-				'clean:server',
-				'concurrent:test',
-				'postcss',
-			]);
-		}
-
-		grunt.task.run([
-			'browserSync:test',
-			//'mocha',
-		]);
-	});
-
-	grunt.registerTask('build', [
+	// When called "grunt" or "grunt default"
+	grunt.registerTask('default', [
+		'newer:eslint',
 		'clean:dist',
-		'bower',
-		'wiredep',         // Merge includes from bower libs (js/css) into html
-		'concurrent:dist', // Minimize app's svgs/images and convert app's ES6-js/scss to legacy-js/css
-		'copy:dist',       // Copy app's files to dist
-		'useminPrepare',   // Create concat, cssmin and uglify tasks
-		'postcss',         // ???
-		'concat',          // Concatenate generated and lib's js/css
-		'cssmin',          // Minify css
-		'uglify',          // Minify js
-		'filerev',         // ???
-		'usemin',          // 
+		'bower-install-simple',
+		'wiredep',          // Merge includes from bower libs (js/css) into html
+		'concurrent:dist',  // Minimize app's svgs/images and convert app's ES6-js/scss to legacy-js/css
+		'copy:dist',        // Copy app's files to dist
+		'replace',
+		'useminPrepare',    // Create concat, cssmin and uglify tasks
+		'postcss',          // ???
+		'concat:generated', // Concatenate generated and lib's js/css
+		'cssmin:generated', // Minify css
+		'uglify:generated', // Minify js
+		'filerev',          // ???
+		'usemin',           // 
 		'htmlmin',
 		'compress',
 	]);
-
-	grunt.registerTask('default', [
-		'newer:eslint',
-		'test',
-		'build',
+	
+	// When called "grunt serve:dist"
+	grunt.registerTask('serve:dist', [
+		'default',
+		'browserSync:dist',
+	]);
+	
+	// When called "grunt serve:dev"
+	grunt.registerTask('serve:dev', [
+		'clean:server',
+		'wiredep',
+		'concurrent:server',
+		'postcss',
+		'browserSync:livereload',
+		'watch',
 	]);
 };

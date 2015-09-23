@@ -1,31 +1,24 @@
 # nodelist-ffm
-[Freifunk München](https://github.com/freifunkMUC) node list
+A [Freifunk](https://freifunk.net) [node list](https://github.com/freifunkMUC/nodelist) by [Freifunk München](https://ffmuc.net)
+
 
 ## Build
-If you are a web dev wiz, you could probably go with:
-```
-npm install
-bower install
-grunt
-```
+Copy one of the `config.js.*` to `app/scripts/config.js` or create your own config file.
 
-All others creatures probably want to install `npm` with their favourite distro's package manager.
+To build this project, you need the `npm` programm.
+You can install it with your favourite distro's package manager.
 This program can sometimes be found in the `nodejs` package.
-After that, they can run the following:
-```
-npm install
-npm install bower grunt-cli
-node_modules/.bin/bower install
-node_modules/.bin/grunt
-```
 
-During development. `grunt serve` resp. `node_modules/.bin/grunt serve` comes in handy.
+After that, they can run `npm run build` to build the project into the `dist` directory.
+
+During development. `npm run serve` comes in handy.
+
 
 ## ToDo
 - [X] Procrastinate
 - [ ] Wait for w2ui 1.4.3 successor release (includes bug fix)
 - [X] Use bower for libs
-- [ ] Use site configuration file
+- [X] Use site configuration file
 - [X] Use grunt/what ever to compile everything into one small file
 - [ ] More columns
   - [ ] Link Quality
@@ -36,6 +29,8 @@ During development. `grunt serve` resp. `node_modules/.bin/grunt serve` comes in
 - [ ] Async data loading
 - [ ] Automatic/manual reloading
 - [ ] Freifunk design
+- [ ] Use JS Modules
+
 
 ## Contribute
 Please try to stick to the coding style.

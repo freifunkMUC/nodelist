@@ -6,8 +6,7 @@ var nodeCnt = 0;
 w2popup.lock('Loading', true);
 var rawNodes = $.ajax({
 	type: 'GET',
-	//url: '../data/nodes.json', // Live
-	url: 'nodes.json', // Test
+	url: nodelistconfig.dataPath + 'nodes.json',
 	dataType: 'json',
 	success: function() { },
 	data: {},
@@ -16,8 +15,7 @@ var rawNodes = $.ajax({
 
 var rawGraph = $.ajax({
 	type: 'GET',
-	//url: '../data/graph.json', // Live
-	url: 'graph.json', // Test
+	url: nodelistconfig.dataPath + 'graph.json',
 	dataType: 'json',
 	success: function() { },
 	data: {},
@@ -157,7 +155,7 @@ var cols = [
 
 $('#grid').w2grid({
 	name: 'grid',
-	header: 'Freifunk M&uuml;nchen Knotenliste',
+	header: document.title = nodelistconfig.siteName + ' Knotenliste',
 	show: {
 		header:        true,
 		toolbar:       true,
@@ -222,7 +220,7 @@ $('#grid').w2grid({
 		}, 300);
 	},
 	onDblClick: function(event) {
-		window.open('https://onmars.eu/ffmuc/map/#!v:m;n:'+records[event.recid].id, '_blank');
+		window.open(nodelistconfig.mapPath + '/#!v:m;n:'+records[event.recid].id, '_blank');
 	},
 });
 

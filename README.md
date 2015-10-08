@@ -1,6 +1,5 @@
 # nodelist-ffm
-A [Freifunk](https://freifunk.net) [node list](https://github.com/freifunkMUC/nodelist) by [Freifunk München](https://ffmuc.net)
-
+A [Freifunk](https://freifunk.net) [node list](https://github.com/freifunkMUC/nodelist) by [Freifunk München](https://ffmuc.net). [Live-Demo](https://onmars.eu/ffmuc/list/)
 
 ## Build
 Copy one of the `config.js.*` to `app/scripts/config.js` or create your own config file.

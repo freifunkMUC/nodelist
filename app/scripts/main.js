@@ -141,7 +141,7 @@ var renderPercent = function(record, ind, col_ind) {
 	if(typeof val == 'undefined') return;
 	
 	return '<div style="position: absolute; left: 0px; top:2px; right: 0px; bottom: 2px; padding: 0px;">' +
-	       '    <div style="background: linear-gradient(to right, rgba(129,181,234,1) 0%,rgba(202,223,246,1) 100%); height: 100`%; width:'+val+'%; overflow: hidden;"></div>' +
+	       '    <div style="background: linear-gradient(to right, rgba(129,181,234,1) 0%,rgba(202,223,246,1) 100%); height: 100%; width:'+val+'%; overflow: hidden;"></div>' +
 	       '</div>' +
 	       '<div style="position: relative;">'+val.toFixed(1)+'%</div>';
 }
@@ -198,16 +198,16 @@ $('#grid').w2grid({
 	searches: [
 //			{field: 'isOnline'    , caption: 'Is online?'},
 //			{field: 'isGateway'   , caption: 'Is gateway?', type: 'combo', options: {items: [true, false]}},
-		{field: 'vpnCnt'      , caption: 'VPNs'          , type: 'int', options: {min: 0}},
-		{field: 'neighbourCnt', caption: 'Links'         , type: 'int', options: {min: 0}},
+		{field: 'vpnCnt'      , caption: 'VPNs'          , type: 'int',  options: {min: 0}},
+		{field: 'neighbourCnt', caption: 'Links'         , type: 'int',  options: {min: 0}},
 		{field: 'id'          , caption: 'Node ID'       , type: 'text'},
 		{field: 'hostname'    , caption: 'Hostname'      , type: 'text'},
 		{field: 'owner'       , caption: 'Owner'         , type: 'text'},
 		{field: 'version'     , caption: 'Gluon Version' , type: 'enum', options: {items: Object.keys(enums.versions)}},
 		{field: 'model'       , caption: 'Hardware model', type: 'enum', options: {items: Object.keys(enums.models)}},
-		{field: 'nproc'       , caption: '# proc'        , type: 'int', options: {min: 0}},
+		{field: 'nproc'       , caption: '# proc'        , type: 'int',  options: {min: 0}},
 		{field: 'autoupdater' , caption: 'Updates'       , type: 'enum', options: {items: ['Off', 'stable', 'experimental']}},
-		{field: 'clients'     , caption: '# clients'     , type: 'int', options: {min: 0}},
+		{field: 'clients'     , caption: '# clients'     , type: 'int',  options: {min: 0}},
 		{field: 'gateway'     , caption: 'Gateway'       , type: 'enum', options: {items: Object.keys(enums.gateways)}},
 		{field: 'site'        , caption: 'Site'          , type: 'enum', options: {items: Object.keys(enums.sites)}},
 		{field: 'uptime'      , caption: 'Uptime'        , type: 'float'},

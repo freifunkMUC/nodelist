@@ -186,7 +186,7 @@ $('#grid').w2grid({
 			{ type: 'button', id: 'about', caption: 'About', icon: 'w2ui-icon-question' },
 		],
 		onClick: function (target, data) {
-			if(target == 'about') {
+			if(target.target == 'about') {
 				$('#about-popup').w2popup();
 			}
 		},

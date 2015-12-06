@@ -1,6 +1,6 @@
 // Copy to app/scripts/config.js
 
-nodelistconfig = {
+window.nodelistconfig = {
 	'dataPath': '',
 	'mapPath': '',
 	'siteName': 'DEV Freifunk München',

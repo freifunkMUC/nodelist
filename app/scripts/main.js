@@ -166,6 +166,8 @@ $.each(nodes, function(i, node){
 			if (row.uptime >= 3*24*3600) {row.style = 'background: #99ff99;'}
 			if (row.uptime >= 10*24*3600) {row.style = 'background: #88ff88;'}
 			if (row.uptime >= 30*24*3600) {row.style = 'background: #77ff77;'}
+
+			row.uptime = moment().subtract(stats.uptime, 'seconds').toDate();
 		}
 		row.rootfsUsage = typeof stats.rootfs_usage != 'undefined' ? stats.rootfs_usage*100 : undefined;
 		row.memoryUsage = typeof stats.memory_usage != 'undefined' ? stats.memory_usage*100 : undefined;

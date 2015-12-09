@@ -24,7 +24,7 @@ During development. `npm run serve` comes in handy.
   - [ ] IPs (with links)
   - [ ] "Has location"
   - [ ] Fancy icons who show a lot of different informations at once (online? + has VPN? + ...)
-- [ ] Honour libs in about
+- [X] Honour libs in about
 - [ ] Async data loading
 - [ ] Automatic/manual reloading
 - [ ] Freifunk design

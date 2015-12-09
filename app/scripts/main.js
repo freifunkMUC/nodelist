@@ -170,6 +170,7 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'memoryUsage' , caption: '% Mem'       , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},
 ];
 
+
 $('#grid').w2grid({
 	name: 'grid',
 	header: document.title = nodelistconfig.siteName + ' Knotenliste',
@@ -188,7 +189,60 @@ $('#grid').w2grid({
 		onClick: function (tgt, data) {
 			// This is some strange bug. Depending on weather this script is uglified or not, tgt is a string or an object.
 			if(tgt == 'about' || tgt.target == 'about') {
-				$('#about-popup').w2popup();
+				w2popup.open({
+					title: 'About',
+					body: `
+	<h1>About</h1>
+	This is <em>node list</em>,
+	a webfrontend for the node data of a <a href="https://freifunk.net">Freifunk</a> <a href="https://freifunk.net/wie-mache-ich-mit/community-finden">Community</a>.
+	It's beeing developed by the <a href="http://ffmuc.net">Freifunk München</a>.
+	Its <a href="https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)">AGPL 3</a> licensed source code can be found on <a href="https://github.com/freifunkMUC/nodelist">Github</a>.
+	
+	
+	<h1>License</h1>
+	<p>
+		<a href="https://github.com/freifunkMUC/nodelist">Freifunk node list</a></br>
+		Copyright &copy; 2015  <a href="https://github.com/Skrupellos">Skruppy</a>
+	</p>
+	
+	<p>
+		This program is free software: you can redistribute it and/or modify
+		it under the terms of the GNU Affero General Public License as
+		published by the Free Software Foundation, either version 3 of the
+		License, or (at your option) any later version.
+	</p>
+	
+	<p>
+		This program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU Affero General Public License for more details.
+	</p>
+	
+	<p>
+		You should have received a copy of the GNU Affero General Public License
+		along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+	</p>
+	
+	
+	<h1>Software credits</h1>
+	<h2><a href="http://www.w2ui.com/">w2ui</a></h2>
+	Licensed under <a href="https://tldrlegal.com/license/mit-license">MIT License</a> by vitmalina@gmail.com.
+	
+	<h2><a href="http://momentjs.com/">Moment.js</a></h2>
+	Licensed under <a href="https://tldrlegal.com/license/mit-license">MIT License</a> by Tim Wood, Iskren Chernev and Moment.js contributors.
+	
+	<h2><a href="https://jquery.com/">jQuery</a></h2>
+	Licensed under <a href="https://tldrlegal.com/license/mit-license">MIT License</a> by jQuery Foundation and other contributors.
+	
+	
+	<h1>Contributors</h1>
+	<ul>
+		<li><a href="https://github.com/Skrupellos">Skruppy</a></li>
+		<li><a href="https://github.com/freifunkMUC/nodelist/graphs/contributors">Other contributors</a>
+	</ul>
+`,
+				});
 			}
 		},
 	},

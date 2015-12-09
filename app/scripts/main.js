@@ -214,8 +214,8 @@ $('#grid').w2grid({
 	records: records,
 	columns: cols,
 	searches: [
-//			{field: 'isOnline'    , caption: 'Is online?'},
-//			{field: 'isGateway'   , caption: 'Is gateway?', type: 'combo', options: {items: [true, false]}},
+		{field: 'isOnline'    , caption: 'Is online?', type: 'combo', options: {items: [true, false]}},
+		{field: 'isGateway'   , caption: 'Is gateway?', type: 'combo', options: {items: [true, false]}},
 		{field: 'vpnCnt'      , caption: 'VPNs'          , type: 'int',  options: {min: 0}},
 		{field: 'neighbourCnt', caption: 'Links'         , type: 'int',  options: {min: 0}},
 		{field: 'id'          , caption: 'Node ID'       , type: 'text'},

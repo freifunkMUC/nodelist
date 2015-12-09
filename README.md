@@ -30,6 +30,7 @@ During development. `npm run serve` comes in handy.
 - [ ] Freifunk design
 - [ ] Use JS Modules
 - [ ] Make default visibility of columns configurable
+- [ ] Better solution for About button workaround
 
 
 ## Contribute

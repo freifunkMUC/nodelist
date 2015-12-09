@@ -185,8 +185,9 @@ $('#grid').w2grid({
 			{ type: 'spacer' },
 			{ type: 'button', id: 'about', caption: 'About', icon: 'w2ui-icon-question' },
 		],
-		onClick: function (target, data) {
-			if(target.target == 'about') {
+		onClick: function (tgt, data) {
+			// This is some strange bug. Depending on weather this script is uglified or not, tgt is a string or an object.
+			if(tgt == 'about' || tgt.target == 'about') {
 				$('#about-popup').w2popup();
 			}
 		},

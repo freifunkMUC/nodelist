@@ -113,7 +113,25 @@ $.each(nodes, function(i, node){
 		row.gateway = stats.gateway;
 		enums.gateways[row.gateway] = true;
 		if(row.isOnline) {
-			row.uptime = moment().subtract(stats.uptime, 'seconds').toDate();
+			row.uptime = ~~(stats.uptime);
+			if (row.uptime == 0) {row.uptime = 999999999;}
+
+			row.tramgrxu = ~~(row.tramgrx / row.uptime);
+			row.tramgtxu = ~~(row.tramgtx / row.uptime);
+
+			row.style = 'background: #ffff00;';
+
+			if (row.uptime >= 3*60) {row.style = 'background: #ffff44;'}
+			if (row.uptime >= 10*60) {row.style = 'background: #ffff88;'}
+			if (row.uptime >= 30*60) {row.style = 'background: #ffffcc;'}
+			if (row.uptime >= 1*3600) {row.style = 'background: #eeffee;'}
+			if (row.uptime >= 3*3600) {row.style = 'background: #ddffdd;'}
+			if (row.uptime >= 6*3600) {row.style = 'background: #ccffcc;'}
+			if (row.uptime >= 12*3600) {row.style = 'background: #bbffbb;'}
+			if (row.uptime >= 1*24*3600) {row.style = 'background: #aaffaa;'}
+			if (row.uptime >= 3*24*3600) {row.style = 'background: #99ff99;'}
+			if (row.uptime >= 10*24*3600) {row.style = 'background: #88ff88;'}
+			if (row.uptime >= 30*24*3600) {row.style = 'background: #77ff77;'}
 		}
 		row.rootfsUsage = typeof stats.rootfs_usage != 'undefined' ? stats.rootfs_usage*100 : undefined;
 		row.memoryUsage = typeof stats.memory_usage != 'undefined' ? stats.memory_usage*100 : undefined;
@@ -227,9 +245,9 @@ $('#grid').w2grid({
 			});
 			
 			$('#'+ event.box_id).w2grid({
-				name: 'subgrid-' + event.recid, 
-				show: { columnHeaders: false },
-				fixedBody: true,
+				name: 'subgrid-' + event.recid,
+				show: { columnHeaders: true },
+				fixedBody: false,
 				columns: cols,
 				records: subRecords,
 			});

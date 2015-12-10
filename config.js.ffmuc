@@ -12,4 +12,11 @@ window.nodelistconfig = {
 	/// TODO The same for down hosts
 	// nodeDownStartColor: {h:  22, s: 100, l: 82},
 	// nodeDownEndColor:   {h:   0, s: 100, l: 70},
+	
+	dataMagnitudes: [
+		{threshold: Math.pow(1024, 2), suffix: 'KiB', scale: Math.pow(1024, 1), tailing: 3},
+		{threshold: Math.pow(1024, 3), suffix: 'MiB', scale: Math.pow(1024, 2), tailing: 3},
+		{threshold: Math.pow(1024, 4), suffix: 'GiB', scale: Math.pow(1024, 3), tailing: 3},
+		{threshold: Math.pow(1024, 5), suffix: 'TiB', scale: Math.pow(1024, 4), tailing: 3},
+	],
 };

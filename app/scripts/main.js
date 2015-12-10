@@ -203,6 +203,27 @@ var renderBool = function(record, ind, col_ind) {
 	return val ? '&#x2714;' : '&#x2718;';
 }
 
+var renderData = function(record, col_ind, tab, suffix) {
+	var val = record[tab.columns[col_ind].field];
+	if(typeof val == 'undefined') return;
+	
+	var i = 0;
+	while(val > nodelistconfig.dataMagnitudes[i].threshold && i <= nodelistconfig.dataMagnitudes.length - 1) {
+		i++;
+	}
+	
+	var magnitude = nodelistconfig.dataMagnitudes[i];
+	return (val/magnitude.scale).toFixed(magnitude.tailing) + ' ' + magnitude.suffix + suffix;
+}
+
+var renderDataAbs = function(record, ind, col_ind) {
+	return renderData(record, col_ind, this, '');
+}
+
+var renderDataRel = function(record, ind, col_ind) {
+	return renderData(record, col_ind, this, '/s');
+}
+
 var renderPercent = function(record, ind, col_ind) {
 	var val = record[this.columns[col_ind].field];
 	if(typeof val == 'undefined') return;

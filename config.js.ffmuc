@@ -1,7 +1,15 @@
 // Copy to app/scripts/config.js
 
 window.nodelistconfig = {
-	'dataPath': 'https://ffmuc.net/data/',
-	'mapPath': 'https://ffmuc.net/map/',
-	'siteName': 'Freifunk München',
+	dataPath: 'https://ffmuc.net/data/',
+	mapPath: 'https://ffmuc.net/map/',
+	siteName: 'Freifunk München',
+	
+	nodeUpStartColor:   {h:  61, s: 100, l: 50},
+	nodeUpEndColor:     {h: 122, s:  97, l: 50},
+	nodeUpGamma:        0.5,
+	nodeUpDays:         30,
+	/// TODO The same for down hosts
+	// nodeDownStartColor: {h:  22, s: 100, l: 82},
+	// nodeDownEndColor:   {h:   0, s: 100, l: 70},
 };

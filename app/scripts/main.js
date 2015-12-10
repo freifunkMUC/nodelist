@@ -89,9 +89,6 @@ $.each(nodes, function(i, node){
 	row.neighbourCnt = node.neighbours.length;
 	row.hasVpn = row.vpnCnt > 0;
 	row.hasNeighbour = row.neighbourCnt > 0;
-	if(row.isOnline == false) {
-		row.style = 'background: #ff0000;'
-	}
 	row.hostname = ni.hostname;
 
 	if(typeof ni.location != 'undefined') {
@@ -153,20 +150,6 @@ $.each(nodes, function(i, node){
 			row.tramgrxu = ~~(row.tramgrx / row.uptime);
 			row.tramgtxu = ~~(row.tramgtx / row.uptime);
 
-			row.style = 'background: #ffff00;';
-
-			if (row.uptime >= 3*60) {row.style = 'background: #ffff44;'}
-			if (row.uptime >= 10*60) {row.style = 'background: #ffff88;'}
-			if (row.uptime >= 30*60) {row.style = 'background: #ffffcc;'}
-			if (row.uptime >= 1*3600) {row.style = 'background: #eeffee;'}
-			if (row.uptime >= 3*3600) {row.style = 'background: #ddffdd;'}
-			if (row.uptime >= 6*3600) {row.style = 'background: #ccffcc;'}
-			if (row.uptime >= 12*3600) {row.style = 'background: #bbffbb;'}
-			if (row.uptime >= 1*24*3600) {row.style = 'background: #aaffaa;'}
-			if (row.uptime >= 3*24*3600) {row.style = 'background: #99ff99;'}
-			if (row.uptime >= 10*24*3600) {row.style = 'background: #88ff88;'}
-			if (row.uptime >= 30*24*3600) {row.style = 'background: #77ff77;'}
-
 			row.uptime = moment().subtract(stats.uptime, 'seconds').toDate();
 		}
 		row.rootfsUsage = typeof stats.rootfs_usage != 'undefined' ? stats.rootfs_usage*100 : undefined;
@@ -183,6 +166,35 @@ $.each(nodes, function(i, node){
 	
 	records.push(row);
 });
+
+
+var renderUptime = function(record, ind, col_ind) {
+	var val = record[this.columns[col_ind].field];
+	var color;
+	var text;
+	
+	if(typeof val == 'undefined') {
+		color = '#faaaaa';
+		text  = '';
+	}
+	else {
+		var secs = moment().diff(val, 'seconds');
+		
+		text = moment(val).fromNow(true);
+		var p = Math.min(Math.pow(secs / (nodelistconfig.nodeUpDays*24*360), nodelistconfig.nodeUpGamma), 1.0);
+		
+		var s = nodelistconfig.nodeUpStartColor;
+		var e = nodelistconfig.nodeUpEndColor;
+		
+		color = 'hsl('+
+		        (s.h + (e.h - s.h) * p)+', ' +
+		        (s.s + (e.s - s.s) * p)+'%, ' +
+		        (s.l + (e.l - s.l) * p)+'%)';
+	}
+	
+	return '<div style="position: absolute; left: 0px; top:0px; right: 0px; bottom: 0px; padding: 0px; background: '+color+';"></div>' +
+	       '<div style="position: relative;">'+text+'</div>';
+}
 
 var renderBool = function(record, ind, col_ind) {
 	var val = record[this.columns[col_ind].field];
@@ -217,7 +229,7 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'autoupdater' , caption: 'Updates'     , size: '90px'},
 	{ resizable: true, sortable: true, field: 'gateway'     , caption: 'Gateway'     , size: '50px', style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'site'        , caption: 'Site'        , size: '60px'},
-	{ resizable: true, sortable: true, field: 'uptime'      , caption: 'Uptime'      , size: '70px', render: 'age'},
+	{ resizable: true, sortable: true, field: 'uptime'        , caption: 'Uptime'         , size:  '70px', render: renderUptime,       style: 'text-align: right; position: relative;'},
 	{ resizable: true, sortable: true, field: 'firstSeen'   , caption: 'First seen'  , size: '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'lastSeen'    , caption: 'Last seen'   , size: '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'rootfsUsage' , caption: '\%root'      , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},

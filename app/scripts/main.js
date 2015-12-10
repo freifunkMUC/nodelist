@@ -192,6 +192,21 @@ var renderBool = function(record, ind, col_ind) {
 	return val ? '&#x2714;' : '&#x2718;';
 }
 
+var renderAddresses = function(record, ind, col_ind) {
+	var val = record[this.columns[col_ind].field];
+	if(typeof val == 'undefined') return;
+	
+	var html = '';
+	val.forEach(function(address, i) {
+		if(i > 0) {
+			html += ', ';
+		}
+		html += '<a href="http://[' + address + ']">' + address + '</a>';
+	});
+	
+	return html;
+}
+
 var renderData = function(record, col_ind, tab, suffix) {
 	var val = record[tab.columns[col_ind].field];
 	if(typeof val == 'undefined') return;
@@ -248,7 +263,7 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'memoryUsage' , caption: '\%Mem'       , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},
 	{ resizable: true, sortable: true, field: 'loclat'      , caption: 'Latitude'    , size: '100px'},
 	{ resizable: true, sortable: true, field: 'loclon'      , caption: 'Longitude'   , size: '100px'},
-	{ resizable: true, sortable: true, field: 'netaddr'     , caption: 'Addresses'   , size: '700px', hidden: true},
+	{ resizable: true, sortable: true, field: 'netaddr'       , caption: 'Addresses'      , size: '700px', render: renderAddresses,    style: 'font-family: monospace; text-decoration: none; letter-spacing: -0.07em;'},
 	{ resizable: true, sortable: true, field: 'netaddrc'    , caption: 'Addr\#'      , size: '50px', style: 'text-align: right;', hidden: true},
 	{ resizable: true, sortable: true, field: 'traFwd'        , caption: 'Data Fwd.'      , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traRx'         , caption: 'Data RX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},

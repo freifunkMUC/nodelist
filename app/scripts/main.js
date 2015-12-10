@@ -104,28 +104,7 @@ $.each(nodes, function(i, node){
 			row.netaddrc = row.netaddr.length;
 		}
 	}
-
-	if(typeof node.statistics != 'undefined') {
-		var stats = node.statistics;
-		if(typeof stats.traffic != 'undefined') {
-			if(typeof stats.traffic.forward != 'undefined') {
-				row.trafor = stats.traffic.forward.bytes;
-			}
-			if(typeof stats.traffic.forward != 'undefined') {
-				row.tramgrx = stats.traffic.mgmt_rx.bytes;
-			}
-			if(typeof stats.traffic.forward != 'undefined') {
-				row.tramgtx = stats.traffic.mgmt_tx.bytes;
-			}
-			if(typeof stats.traffic.forward != 'undefined') {
-				row.trarx = stats.traffic.rx.bytes;
-			}
-			if(typeof stats.traffic.forward != 'undefined') {
-				row.tratx = stats.traffic.tx.bytes;
-			}
-		}
-	}
-
+	
 	if(typeof ni.hardware != 'undefined') {
 		row.model = ni.hardware.model;
 		row.nproc = ni.hardware.nproc;
@@ -141,16 +120,26 @@ $.each(nodes, function(i, node){
 	}
 	row.owner = typeof ni.owner != 'undefined' ? ni.owner.contact : undefined;
 	if(typeof node.statistics != 'undefined') {
+		var stats = node.statistics;
+		
 		row.clients = stats.clients;
 		row.gateway = stats.gateway;
 		enums.gateways[row.gateway] = true;
+		
 		if(row.isOnline) {
-			row.uptime = ~~(stats.uptime);
-			if (row.uptime == 0) {row.uptime = 999999999;}
-
-			row.tramgrxu = ~~(row.tramgrx / row.uptime);
-			row.tramgtxu = ~~(row.tramgtx / row.uptime);
-
+			if (stats.uptime > 0) {
+				row.traFwd        = stats.traffic.forward.bytes;
+				row.traRx         = stats.traffic.rx.bytes;
+				row.traTx         = stats.traffic.tx.bytes;
+				row.traMgmtRx     = stats.traffic.mgmt_rx.bytes;
+				row.traMgmtTx     = stats.traffic.mgmt_tx.bytes;
+				row.traFwdRate    = row.traFwd    / stats.uptime;
+				row.traRxRate     = row.traRx     / stats.uptime;
+				row.traTxRate     = row.traTx     / stats.uptime;
+				row.traMgmtRxRate = row.traMgmtRx / stats.uptime;
+				row.traMgmtTxRate = row.traMgmtTx / stats.uptime;
+			}
+			
 			row.uptime = moment().subtract(stats.uptime, 'seconds').toDate();
 		}
 		row.rootfsUsage = typeof stats.rootfs_usage != 'undefined' ? stats.rootfs_usage*100 : undefined;
@@ -261,13 +250,16 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'loclon'      , caption: 'Longitude'   , size: '100px'},
 	{ resizable: true, sortable: true, field: 'netaddr'     , caption: 'Addresses'   , size: '700px', hidden: true},
 	{ resizable: true, sortable: true, field: 'netaddrc'    , caption: 'Addr\#'      , size: '50px', style: 'text-align: right;', hidden: true},
-	{ resizable: true, sortable: true, field: 'trafor'      , caption: 'ForwardBytes', size: '100px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'tramgrx'     , caption: 'MgmtRXBytes' , size: '100px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'tramgtx'     , caption: 'MgmtTXBytes' , size: '100px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'trarx'       , caption: 'RXBytes'     , size: '100px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'tratx'       , caption: 'TXBytes'     , size: '100px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'tramgrxu'    , caption: 'MgmtRXBpU'   , size: '100px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'tramgtxu'    , caption: 'MgmtTXBpU'   , size: '100px', style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traFwd'        , caption: 'Data Fwd.'      , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traRx'         , caption: 'Data RX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traTx'         , caption: 'Data TX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traMgmtRx'     , caption: 'Mgmt. RX'       , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traMgmtTx'     , caption: 'Mgmt. TX'       , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traFwdRate'    , caption: 'Data Fwd. Rate' , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traRxRate'     , caption: 'Data RX Rate'   , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traTxRate'     , caption: 'Data TX Rate'   , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traMgmtRxRate' , caption: 'Mgmt. RX Rate'  , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'traMgmtTxRate' , caption: 'Mgmt. TX Rate'  , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
 ];
 
 

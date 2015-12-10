@@ -90,12 +90,13 @@ $.each(nodes, function(i, node){
 	row.hasVpn = row.vpnCnt > 0;
 	row.hasNeighbour = row.neighbourCnt > 0;
 	row.hostname = ni.hostname;
-
-	if(typeof ni.location != 'undefined') {
+	row.hasLocation = typeof ni.location != 'undefined';
+	
+	if(row.hasLocation) {
 		row.loclat = ni.location.latitude;
 		row.loclon = ni.location.longitude;
 	}
-
+	
 	if(typeof ni.network != 'undefined') {
 		if(typeof ni.network.addresses != 'undefined') {
 			var row_netaddr = ni.network.addresses;
@@ -217,6 +218,7 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'isGateway'   , caption: 'Gateway'     , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
 	{ resizable: true, sortable: true, field: 'hasVpn'      , caption: 'VPN'         , size: '40px', render: renderBool, style: 'text-align: center;'},
 	{ resizable: true, sortable: true, field: 'hasNeighbour', caption: 'Link'        , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
+	{ resizable: true, sortable: true, field: 'hasLocation'   , caption: 'Location'       , size:  '40px', render: renderBool,         style: 'text-align: center;'},
 	{ resizable: true, sortable: true, field: 'vpnCnt'      , caption: 'VPNs'        , size: '50px', style: 'text-align: right;', hidden: true},
 	{ resizable: true, sortable: true, field: 'neighbourCnt', caption: 'Links'       , size: '50px', style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'clients'     , caption: 'Clients'     , size: '50px', style: 'text-align: right;'},

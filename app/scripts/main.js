@@ -93,15 +93,15 @@ $.each(nodes, function(i, node){
 	row.hasLocation = typeof ni.location != 'undefined';
 	
 	if(row.hasLocation) {
-		row.loclat = ni.location.latitude;
-		row.loclon = ni.location.longitude;
+		row.locLat = ni.location.latitude;
+		row.locLon = ni.location.longitude;
 	}
 	
 	if(typeof ni.network != 'undefined') {
 		if(typeof ni.network.addresses != 'undefined') {
-			var row_netaddr = ni.network.addresses;
-			row.netaddr = row_netaddr.sort();
-			row.netaddrc = row.netaddr.length;
+			var addresses = ni.network.addresses;
+			row.netAddr    = addresses.sort();
+			row.netAddrCnt = addresses.length;
 		}
 	}
 	
@@ -261,10 +261,10 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'lastSeen'      , caption: 'Last seen'      , size:  '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'rootfsUsage'   , caption: '\%root'         , size:  '50px', render: renderPercent,      style: 'text-align: right; position: relative;'},
 	{ resizable: true, sortable: true, field: 'memoryUsage'   , caption: '\%Mem'          , size:  '50px', render: renderPercent,      style: 'text-align: right; position: relative;'},
-	{ resizable: true, sortable: true, field: 'loclat'        , caption: 'Latitude'       , size:  '80px'},
-	{ resizable: true, sortable: true, field: 'loclon'        , caption: 'Longitude'      , size:  '80px'},
-	{ resizable: true, sortable: true, field: 'netaddr'       , caption: 'Addresses'      , size: '700px', render: renderAddresses,    style: 'font-family: monospace; text-decoration: none; letter-spacing: -0.07em;'},
-	{ resizable: true, sortable: true, field: 'netaddrc'      , caption: 'Addr\#'         , size:  '50px',                             style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'locLat'        , caption: 'Latitude'       , size:  '80px'},
+	{ resizable: true, sortable: true, field: 'locLon'        , caption: 'Longitude'      , size:  '80px'},
+	{ resizable: true, sortable: true, field: 'netAddr'       , caption: 'Addresses'      , size: '700px', render: renderAddresses,    style: 'font-family: monospace; text-decoration: none; letter-spacing: -0.07em;'},
+	{ resizable: true, sortable: true, field: 'netAddrCnt'    , caption: 'Addr\#'         , size:  '50px',                             style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traFwd'        , caption: 'Data Fwd.'      , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traRx'         , caption: 'Data RX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traTx'         , caption: 'Data TX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
@@ -384,10 +384,10 @@ $('#grid').w2grid({
 		{field: 'lastSeen'      , caption: 'Last seen'      , type: 'date'},
 		{field: 'rootfsUsage'   , caption: 'Root FS usage'  , type: 'percent', outTag: '%'},
 		{field: 'memoryUsage'   , caption: 'Memory usage'   , type: 'percent', outTag: '%'},
-		{field: 'loclat'        , caption: 'Latitude'       , type: 'float'},
-		{field: 'loclon'        , caption: 'Longitude'      , type: 'float'},
-		{field: 'netaddr'       , caption: 'Addresses'      , type: 'text'},
-		{field: 'netaddrc'      , caption: '# Addresses'    , type: 'int',  options: {min: 0}},
+		{field: 'locLat'        , caption: 'Latitude'       , type: 'float'},
+		{field: 'locLon'        , caption: 'Longitude'      , type: 'float'},
+		{field: 'netAddr'       , caption: 'Addresses'      , type: 'text'},
+		{field: 'netAddrCnt'    , caption: '# Addresses'  , type: 'int',  options: {min: 0}},
 		{field: 'traFwd'        , caption: 'Data Fwd.'      , type: 'int',  options: {min: 0}},
 		{field: 'traRx'         , caption: 'Data RX'        , type: 'int',  options: {min: 0}},
 		{field: 'traTx'         , caption: 'Data TX'        , type: 'int',  options: {min: 0}},

@@ -21,9 +21,10 @@ During development. `npm run serve` comes in handy.
 - [X] Use grunt/what ever to compile everything into one small file
 - [ ] More columns
   - [ ] Link Quality
-  - [ ] IPs (with links)
-  - [ ] "Has location"
+  - [X] IPs (with links)
+  - [X] "Has location"
   - [ ] Fancy icons who show a lot of different informations at once (online? + has VPN? + ...)
+  - [ ] Link to stats
 - [X] Honour libs in about
 - [ ] Async data loading
 - [ ] Automatic/manual reloading

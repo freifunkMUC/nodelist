@@ -239,32 +239,32 @@ var renderPercent = function(record, ind, col_ind) {
 }
 
 var cols = [
-	{ resizable: true, sortable: true, field: 'isOnline'    , caption: 'Online'      , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
-	{ resizable: true, sortable: true, field: 'isGateway'   , caption: 'Gateway'     , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
-	{ resizable: true, sortable: true, field: 'hasVpn'      , caption: 'VPN'         , size: '40px', render: renderBool, style: 'text-align: center;'},
-	{ resizable: true, sortable: true, field: 'hasNeighbour', caption: 'Link'        , size: '40px', render: renderBool, style: 'text-align: center;', hidden: true},
+	{ resizable: true, sortable: true, field: 'isOnline'      , caption: 'Online'         , size:  '40px', render: renderBool,         style: 'text-align: center;'},
+	{ resizable: true, sortable: true, field: 'isGateway'     , caption: 'Gateway'        , size:  '40px', render: renderBool,         style: 'text-align: center;'},
+	{ resizable: true, sortable: true, field: 'hasVpn'        , caption: 'VPN'            , size:  '40px', render: renderBool,         style: 'text-align: center;'},
+	{ resizable: true, sortable: true, field: 'hasNeighbour'  , caption: 'Link'           , size:  '40px', render: renderBool,         style: 'text-align: center;'},
 	{ resizable: true, sortable: true, field: 'hasLocation'   , caption: 'Location'       , size:  '40px', render: renderBool,         style: 'text-align: center;'},
-	{ resizable: true, sortable: true, field: 'vpnCnt'      , caption: 'VPNs'        , size: '50px', style: 'text-align: right;', hidden: true},
-	{ resizable: true, sortable: true, field: 'neighbourCnt', caption: 'Links'       , size: '50px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'clients'     , caption: 'Clients'     , size: '50px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'id'          , caption: 'Node ID'     , size: '100px', style: 'font-family: monospace;'},
-	{ resizable: true, sortable: true, field: 'hostname'    , caption: 'Hostname'    , size: '200px'},
-	{ resizable: true, sortable: true, field: 'owner'       , caption: 'Owner'       , size: '200px'},
-	{ resizable: true, sortable: true, field: 'version'     , caption: 'Gluon Vers.' , size: '140px'},
-	{ resizable: true, sortable: true, field: 'model'       , caption: 'HW model'    , size: '200px'},
-	{ resizable: true, sortable: true, field: 'nproc'       , caption: 'Procs'       , size: '40px', style: 'text-align: right;', hidden: true},
-	{ resizable: true, sortable: true, field: 'autoupdater' , caption: 'Updates'     , size: '90px'},
-	{ resizable: true, sortable: true, field: 'gateway'     , caption: 'Gateway'     , size: '50px', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'site'        , caption: 'Site'        , size: '60px'},
+	{ resizable: true, sortable: true, field: 'vpnCnt'        , caption: 'VPNs'           , size:  '50px',                             style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'neighbourCnt'  , caption: 'Links'          , size:  '50px',                             style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'clients'       , caption: 'Clients'        , size:  '50px',                             style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'id'            , caption: 'Node ID'        , size: '100px',                             style: 'font-family: monospace;'},
+	{ resizable: true, sortable: true, field: 'hostname'      , caption: 'Hostname'       , size: '200px'},
+	{ resizable: true, sortable: true, field: 'owner'         , caption: 'Owner'          , size: '200px'},
+	{ resizable: true, sortable: true, field: 'version'       , caption: 'Gluon Vers.'    , size: '140px'},
+	{ resizable: true, sortable: true, field: 'model'         , caption: 'HW model'       , size: '200px'},
+	{ resizable: true, sortable: true, field: 'nproc'         , caption: 'Procs'          , size:  '40px',                             style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'autoupdater'   , caption: 'Updates'        , size:  '90px'},
+	{ resizable: true, sortable: true, field: 'gateway'       , caption: 'Gateway'        , size:  '50px',                             style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'site'          , caption: 'Site'           , size: '100px'},
 	{ resizable: true, sortable: true, field: 'uptime'        , caption: 'Uptime'         , size:  '70px', render: renderUptime,       style: 'text-align: right; position: relative;'},
-	{ resizable: true, sortable: true, field: 'firstSeen'   , caption: 'First seen'  , size: '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'lastSeen'    , caption: 'Last seen'   , size: '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
-	{ resizable: true, sortable: true, field: 'rootfsUsage' , caption: '\%root'      , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},
-	{ resizable: true, sortable: true, field: 'memoryUsage' , caption: '\%Mem'       , size: '50px', render: renderPercent, style: 'text-align: right; position: relative;'},
-	{ resizable: true, sortable: true, field: 'loclat'      , caption: 'Latitude'    , size: '100px'},
-	{ resizable: true, sortable: true, field: 'loclon'      , caption: 'Longitude'   , size: '100px'},
+	{ resizable: true, sortable: true, field: 'firstSeen'     , caption: 'First seen'     , size:  '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'lastSeen'      , caption: 'Last seen'      , size:  '80px', render: 'date: DD.MM.YYYY', style: 'text-align: right;'},
+	{ resizable: true, sortable: true, field: 'rootfsUsage'   , caption: '\%root'         , size:  '50px', render: renderPercent,      style: 'text-align: right; position: relative;'},
+	{ resizable: true, sortable: true, field: 'memoryUsage'   , caption: '\%Mem'          , size:  '50px', render: renderPercent,      style: 'text-align: right; position: relative;'},
+	{ resizable: true, sortable: true, field: 'loclat'        , caption: 'Latitude'       , size:  '80px'},
+	{ resizable: true, sortable: true, field: 'loclon'        , caption: 'Longitude'      , size:  '80px'},
 	{ resizable: true, sortable: true, field: 'netaddr'       , caption: 'Addresses'      , size: '700px', render: renderAddresses,    style: 'font-family: monospace; text-decoration: none; letter-spacing: -0.07em;'},
-	{ resizable: true, sortable: true, field: 'netaddrc'    , caption: 'Addr\#'      , size: '50px', style: 'text-align: right;', hidden: true},
+	{ resizable: true, sortable: true, field: 'netaddrc'      , caption: 'Addr\#'         , size:  '50px',                             style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traFwd'        , caption: 'Data Fwd.'      , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traRx'         , caption: 'Data RX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traTx'         , caption: 'Data TX'        , size: '100px', render: renderDataAbs,      style: 'text-align: right;'},
@@ -276,6 +276,10 @@ var cols = [
 	{ resizable: true, sortable: true, field: 'traMgmtRxRate' , caption: 'Mgmt. RX Rate'  , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
 	{ resizable: true, sortable: true, field: 'traMgmtTxRate' , caption: 'Mgmt. TX Rate'  , size: '100px', render: renderDataRel,      style: 'text-align: right;'},
 ];
+
+cols.forEach(function(el) {
+	el.hidden = nodelistconfig.showCols.indexOf(el.field) < 0;
+});
 
 
 $('#grid').w2grid({

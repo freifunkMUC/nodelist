@@ -47,6 +47,7 @@ module.exports = function (grunt) {
 				background: true,
 				open: false,
 				watchOptions: { ignored: '' },
+				notify: false,
 			},
 			
 			livereload: {

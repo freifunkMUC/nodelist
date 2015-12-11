@@ -306,7 +306,7 @@ $('#grid').w2grid({
 	<h1>About</h1>
 	This is <em>node list</em>,
 	a webfrontend for the node data of a <a href="https://freifunk.net">Freifunk</a> <a href="https://freifunk.net/wie-mache-ich-mit/community-finden">Community</a>.
-	It's beeing developed by the <a href="http://ffmuc.net">Freifunk München</a>.
+	It's being developed by the <a href="http://ffmuc.net">Freifunk München</a>.
 	Its <a href="https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)">AGPL 3</a> licensed source code can be found on <a href="https://github.com/freifunkMUC/nodelist">Github</a>.
 	
 	

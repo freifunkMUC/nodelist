@@ -379,7 +379,7 @@ $('#grid').w2grid({
 		{field: 'autoupdater'   , caption: 'Updates'        , type: 'list', options: {items: ['Off', 'stable', 'experimental']}},
 		{field: 'gateway'       , caption: 'Gateway'        , type: 'combo', options: {items: Object.keys(enums.gateways)}},
 		{field: 'site'          , caption: 'Site'           , type: 'list', options: {items: Object.keys(enums.sites)}},
-// 		//{field: 'uptime'        , caption: 'Uptime'         , type: 'float'},
+		{field: 'uptime'        , caption: 'Online since'   , type: 'date'},
 		{field: 'firstSeen'     , caption: 'First seen'     , type: 'date'},
 		{field: 'lastSeen'      , caption: 'Last seen'      , type: 'date'},
 		{field: 'rootfsUsage'   , caption: 'Root FS usage'  , type: 'percent', outTag: '%'},

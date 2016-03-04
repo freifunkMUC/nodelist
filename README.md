@@ -12,7 +12,7 @@ This program can sometimes be found in the `nodejs` package.
 After that, you can run `npm run build` to build the project into the `dist` directory.
 The created content in `dist` can then be statically served by your favourite webserver.
 
-It would be nice, if add yourself to the [list of instances](#Instances).
+It would be nice, if add yourself to the [list of instances](#instances).
 
 During development. `npm run serve:dev` and `npm run serve:dist` comes in handy.
 

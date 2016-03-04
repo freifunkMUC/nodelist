@@ -12,6 +12,8 @@ This program can sometimes be found in the `nodejs` package.
 After that, you can run `npm run build` to build the project into the `dist` directory.
 The created content in `dist` can then be statically served by your favourite webserver.
 
+It would be nice, if add yourself to the list of instances.
+
 During development. `npm run serve:dev` and `npm run serve:dist` comes in handy.
 
 
@@ -42,3 +44,19 @@ Please try to stick to the coding style.
 Don't hesitate to send a pull request. Seriously. Just do it!
 
 Questions? Ask [Skruppy](https://github.com/Skrupellos).
+
+
+## Instaces
+| Freifunk Altdorf                | [Instance](http://nodelist.altdorf.freifunk.tk/)                        | [Source](http://nodelist.altdorf.freifunk.tk/dir/) |
+| Freifunk Bad Griesbach          | [Instance](http://nodelist.griesbach.freifunk.tk/)                      | [Source](http://nodelist.griesbach.freifunk.tk/dir/) |
+| Freifunk Möhne Arnsberg         | [Instance](https://www.freifunk-moehne.de/knotenliste/arnsberg/)        | |
+| Freifunk Möhne Balve-Kierspe    | [Instance](https://www.freifunk-moehne.de/knotenliste/balvekierspe/)    | |
+| Freifunk Möhne Biggesee         | [Instance](https://www.freifunk-moehne.de/knotenliste/biggesee/)        | |
+| Freifunk Möhne Meschede/Bestwig | [Instance](https://www.freifunk-moehne.de/knotenliste/meschedebestwig/) | |
+| Freifunk Möhne Möhnesee         | [Instance](https://www.freifunk-moehne.de/knotenliste/moehnesee/)       | |
+| Freifunk Möhne Soest            | [Instance](https://www.freifunk-moehne.de/knotenliste/soest/)           | |
+| Freifunk Möhne Soester Umland   | [Instance](https://www.freifunk-moehne.de/knotenliste/soesterumland/)   | |
+| Freifunk Möhne Sundern          | [Instance](https://www.freifunk-moehne.de/knotenliste/sundern/)         | |
+| Freifunk Möhne Warstein         | [Instance](https://www.freifunk-moehne.de/knotenliste/warstein/)        | |
+| Freifunk München                | [Instance](https://onmars.eu/ffmuc/list/)                               | [Source](https://github.com/freifunkMUC/nodelist) |
+| Freifunk Niersufer              | [Instance](https://map.freifunk-niersufer.de/list/)                     | |

@@ -12,7 +12,7 @@ This program can sometimes be found in the `nodejs` package.
 After that, you can run `npm run build` to build the project into the `dist` directory.
 The created content in `dist` can then be statically served by your favourite webserver.
 
-It would be nice, if add yourself to the list of instances.
+It would be nice, if add yourself to the [list of instances](#Instances).
 
 During development. `npm run serve:dev` and `npm run serve:dist` comes in handy.
 
@@ -47,6 +47,8 @@ Questions? Ask [Skruppy](https://github.com/Skrupellos).
 
 
 ## Instaces
+| Community/Instance name         | Instance link                                                           | Source/patches/repo link |
+| ---                             | ---                                                                     | ---       |
 | Freifunk Altdorf                | [Instance](http://nodelist.altdorf.freifunk.tk/)                        | [Source](http://nodelist.altdorf.freifunk.tk/dir/) |
 | Freifunk Bad Griesbach          | [Instance](http://nodelist.griesbach.freifunk.tk/)                      | [Source](http://nodelist.griesbach.freifunk.tk/dir/) |
 | Freifunk Möhne Arnsberg         | [Instance](https://www.freifunk-moehne.de/knotenliste/arnsberg/)        | |
@@ -59,4 +61,3 @@ Questions? Ask [Skruppy](https://github.com/Skrupellos).
 | Freifunk Möhne Sundern          | [Instance](https://www.freifunk-moehne.de/knotenliste/sundern/)         | |
 | Freifunk Möhne Warstein         | [Instance](https://www.freifunk-moehne.de/knotenliste/warstein/)        | |
 | Freifunk München                | [Instance](https://onmars.eu/ffmuc/list/)                               | [Source](https://github.com/freifunkMUC/nodelist) |
-| Freifunk Niersufer              | [Instance](https://map.freifunk-niersufer.de/list/)                     | |

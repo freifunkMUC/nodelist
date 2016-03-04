@@ -127,7 +127,7 @@ $.each(nodes, function(i, node){
 		enums.gateways[row.gateway] = true;
 		
 		if(row.isOnline) {
-			if (stats.uptime > 0) {
+			if (stats.uptime > 0 && typeof stats.traffic != 'undefined') {
 				row.traFwd        = stats.traffic.forward.bytes;
 				row.traRx         = stats.traffic.rx.bytes;
 				row.traTx         = stats.traffic.tx.bytes;

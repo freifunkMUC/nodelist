@@ -3,6 +3,7 @@ A [Freifunk](https://freifunk.net) [node list](https://github.com/freifunkMUC/no
 
 ## Build
 Copy one of the `config.js.*` to `app/scripts/config.js` or create your own config file.
+Rermember to set `downstreamSource` if you modify the source.
 
 To build this project, you need the `npm` programm.
 You can install it with your favourite distro's package manager.

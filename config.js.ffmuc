@@ -1,9 +1,21 @@
 // Copy to app/scripts/config.js
+// 
+// NOTE: Nodelist is licensed under the terms of the GNU Affero General Public
+// License. This means that any changes to the source code need to be advertised
+// to users that access nodelist over the web or other networks. In addition,
+// they must be pointed to a possibility to download the modified source code.
+// 
+// This can easily be accomplished by creating a download page (e.g. on Github)
+// for your fork and linking it in the About page. To do so, you can point the
+// 'downstreamSource' configuration variable to your patches/source repository
+// or download location. If you did not modify the source code, no action is
+// necessary and you can keep the default.
 
 window.nodelistconfig = {
 	dataPath: 'https://ffmuc.net/data/',
 	mapPath: 'https://ffmuc.net/map/',
 	siteName: 'Freifunk München',
+	//downstreamSource: 'https://github.com/your/fork',
 	
 	nodeUpStartColor:   {h:  61, s: 100, l: 50},
 	nodeUpEndColor:     {h: 122, s:  97, l: 50},

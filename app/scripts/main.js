@@ -281,6 +281,13 @@ cols.forEach(function(el) {
 	el.hidden = nodelistconfig.showCols.indexOf(el.field) < 0;
 });
 
+if(typeof nodelistconfig.downstreamSource == 'undefined') {
+	var srcHtml = '<a href="https://github.com/freifunkMUC/nodelist">Github</a> and is being developed by <a href="http://ffmuc.net">Freifunk München</a>.';
+}
+else {
+	var srcHtml = nodelistconfig.downstreamSource.link(nodelistconfig.downstreamSource)+'.<br>'+
+	'<small>Upstream is provided by <a href="http://ffmuc.net">Freifunk München</a>, which source code can be found on <a href="https://github.com/freifunkMUC/nodelist">GitHub</a>.</small>';
+}
 
 $('#grid').w2grid({
 	name: 'grid',
@@ -306,8 +313,7 @@ $('#grid').w2grid({
 	<h1>About</h1>
 	This is <em>node list</em>,
 	a webfrontend for the node data of a <a href="https://freifunk.net">Freifunk</a> <a href="https://freifunk.net/wie-mache-ich-mit/community-finden">Community</a>.
-	It's being developed by the <a href="http://ffmuc.net">Freifunk München</a>.
-	Its <a href="https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)">AGPL 3</a> licensed source code can be found on <a href="https://github.com/freifunkMUC/nodelist">Github</a>.
+	Its <a href="https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)">AGPL 3</a> licensed source code can be found on `+srcHtml+`
 	
 	
 	<h1>License</h1>

@@ -8,9 +8,10 @@ To build this project, you need the `npm` programm.
 You can install it with your favourite distro's package manager.
 This program can sometimes be found in the `nodejs` package.
 
-After that, they can run `npm run build` to build the project into the `dist` directory.
+After that, you can run `npm run build` to build the project into the `dist` directory.
+The created content in `dist` can then be statically served by your favourite webserver.
 
-During development. `npm run serve` comes in handy.
+During development. `npm run serve:dev` and `npm run serve:dist` comes in handy.
 
 
 ## ToDo

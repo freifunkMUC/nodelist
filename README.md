@@ -46,7 +46,7 @@ Don't hesitate to send a pull request. Seriously. Just do it!
 Questions? Ask [Skruppy](https://github.com/Skrupellos).
 
 
-## Instaces
+## Instances
 | Community/Instance name         | Instance link                                                           | Source/patches/repo link |
 | ---                             | ---                                                                     | ---       |
 | Freifunk Altdorf                | [Instance](http://nodelist.altdorf.freifunk.tk/)                        | [Source](http://nodelist.altdorf.freifunk.tk/dir/) |

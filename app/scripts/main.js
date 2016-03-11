@@ -281,11 +281,12 @@ cols.forEach(function(el) {
 	el.hidden = nodelistconfig.showCols.indexOf(el.field) < 0;
 });
 
+var srcHtml;
 if(typeof nodelistconfig.downstreamSource == 'undefined') {
-	var srcHtml = '<a href="https://github.com/freifunkMUC/nodelist">Github</a> and is being developed by <a href="http://ffmuc.net">Freifunk München</a>.';
+	srcHtml = '<a href="https://github.com/freifunkMUC/nodelist">Github</a> and is being developed by <a href="http://ffmuc.net">Freifunk München</a>.';
 }
 else {
-	var srcHtml = nodelistconfig.downstreamSource.link(nodelistconfig.downstreamSource)+'.<br>'+
+	srcHtml = nodelistconfig.downstreamSource.link(nodelistconfig.downstreamSource)+'.<br>'+
 	'<small>Upstream is provided by <a href="http://ffmuc.net">Freifunk München</a>, which source code can be found on <a href="https://github.com/freifunkMUC/nodelist">GitHub</a>.</small>';
 }
 

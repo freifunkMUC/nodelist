@@ -49,7 +49,7 @@ Questions? Ask [Skruppy](https://github.com/Skrupellos).
 ## Instances
 | Community/Instance name         | Instance link                                                           | Source/patches/repo link |
 | ---                             | ---                                                                     | ---       |
-| Freifunk Altdorf                | [Instance](http://nodelist.altdorf.freifunk.tk/)                        | [Source](http://nodelist.altdorf.freifunk.tk/dir/) |
+| Freifunk Altdorf                | [Instance](https://nodelist.tecff.de/)                                  | [Source](https://github.com/tecff/nodelist) |
 | Freifunk Bad Griesbach          | [Instance](http://nodelist.griesbach.freifunk.tk/)                      | [Source](http://nodelist.griesbach.freifunk.tk/dir/) |
 | Freifunk Möhne Arnsberg         | [Instance](https://www.freifunk-moehne.de/knotenliste/arnsberg/)        | |
 | Freifunk Möhne Balve-Kierspe    | [Instance](https://www.freifunk-moehne.de/knotenliste/balvekierspe/)    | |

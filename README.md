@@ -49,6 +49,7 @@ Questions? Ask [Skruppy](https://github.com/Skrupellos).
 ## Instances
 | Community/Instance name         | Instance link                                                           | Source/patches/repo link |
 | ---                             | ---                                                                     | ---       |
+| Freifunk Aachen                 | [Instance] (https://map.aachen.freifunk.net/nodelist/)                  | |
 | Freifunk Altdorf                | [Instance](https://nodelist.tecff.de/)                                  | [Source](https://github.com/tecff/nodelist) |
 | Freifunk Bad Griesbach          | [Instance](http://nodelist.griesbach.freifunk.tk/)                      | [Source](http://nodelist.griesbach.freifunk.tk/dir/) |
 | Freifunk Möhne Arnsberg         | [Instance](https://www.freifunk-moehne.de/knotenliste/arnsberg/)        | |

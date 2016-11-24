@@ -3,6 +3,6 @@
   "private": true,
   "dependencies": {
     "moment": "~2.10.6",
-    "w2ui": "https://github.com/Skrupellos/w2ui-dist.git#318c0b6"
+    "w2ui": "https://github.com/Skrupellos/w2ui-dist.git#6ae2165"
   }
 }

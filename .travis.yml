@@ -1,11 +1,16 @@
 language: node_js
 sudo: false
 
+## Travis CI creates empty cache directories: delete them!
 install:
-  - true
+  - find . -maxdepth 1 -type d -empty -delete
 
+## Travis CI caches also on filed build: Error hard!
 script:
-  - npm run build
+  - npm run build || exit 42
+
+before_cache:
+  - rm -f node_modules/grunt-newer/.cache/eslint/target/timestamp
 
 cache:
   directories:

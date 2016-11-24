@@ -32,9 +32,9 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "build": "export PATH=\"node_modules/.bin:$PATH\" ; test -d node_modules || npm install ; command -v grunt >/dev/null 2>&1 || npm install grunt-cli ; grunt",
-    "serve:dev": "export PATH=\"node_modules/.bin:$PATH\" ; test -d node_modules || npm install ; command -v grunt >/dev/null 2>&1 || npm install grunt-cli ; grunt serve:dev",
-    "serve:dist": "export PATH=\"node_modules/.bin:$PATH\" ; test -d node_modules || npm install ; command -v grunt >/dev/null 2>&1 || npm install grunt-cli ; grunt serve:dist"
+    "build": "export PATH=\"node_modules/.bin:$PATH\" ; test -d node_modules || npm install ; command -v grunt >/dev/null 2>&1 || npm install grunt-cli grunt-sass ; grunt",
+    "serve:dev": "export PATH=\"node_modules/.bin:$PATH\" ; test -d node_modules || npm install ; command -v grunt >/dev/null 2>&1 || npm install grunt-cli grunt-sass ; grunt serve:dev",
+    "serve:dist": "export PATH=\"node_modules/.bin:$PATH\" ; test -d node_modules || npm install ; command -v grunt >/dev/null 2>&1 || npm install grunt-cli grunt-sass ; grunt serve:dist"
   },
   "eslintConfig": {
     "extends": [

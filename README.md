@@ -1,7 +1,7 @@
 # nodelist-ffm
 A [Freifunk](https://freifunk.net) [node list](https://github.com/freifunkMUC/nodelist) by [Freifunk München](https://ffmuc.net). [Live-Demo](https://onmars.eu/ffmuc/list/)
 
-## Build
+## Build [![Build Status](https://travis-ci.org/freifunkMUC/nodelist.svg?branch=master)](https://travis-ci.org/freifunkMUC/nodelist)
 Copy one of the `config.js.*` to `app/scripts/config.js` or create your own config file.
 Rermember to set `downstreamSource` if you modify the source.
 

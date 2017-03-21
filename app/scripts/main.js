@@ -42,7 +42,7 @@ var rawGraph = $.ajax({
 var enums = {gateways: {}, versions: {}, models: {}, sites: {}};
 
 $.each(rawNodes, function(i, node){
-	if(typeof node.nodeinfo == undefined) {
+	if(typeof node.nodeinfo == 'undefined') {
 		//console.log('Useless node:', node);
 		return;
 	}

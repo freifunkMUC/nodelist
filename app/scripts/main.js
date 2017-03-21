@@ -42,7 +42,7 @@ var rawGraph = $.ajax({
 var enums = {gateways: {}, versions: {}, models: {}, sites: {}};
 
 $.each(rawNodes, function(i, node){
-	if(typeof node.nodeinfo == undefined) {
+	if(node.nodeinfo == null) {
 		//console.log('Useless node:', node);
 		return;
 	}
@@ -90,36 +90,36 @@ $.each(nodes, function(i, node){
 	row.hasVpn = row.vpnCnt > 0;
 	row.hasNeighbour = row.neighbourCnt > 0;
 	row.hostname = ni.hostname;
-	row.hasLocation = typeof ni.location != 'undefined';
+	row.hasLocation = ni.location != null;
 	
 	if(row.hasLocation) {
 		row.locLat = ni.location.latitude;
 		row.locLon = ni.location.longitude;
 	}
 	
-	if(typeof ni.network != 'undefined') {
-		if(typeof ni.network.addresses != 'undefined') {
+	if(ni.network != null) {
+		if(ni.network.addresses != null) {
 			var addresses = ni.network.addresses;
 			row.netAddr    = addresses.sort();
 			row.netAddrCnt = addresses.length;
 		}
 	}
 	
-	if(typeof ni.hardware != 'undefined') {
+	if(ni.hardware != null) {
 		row.model = ni.hardware.model;
 		row.nproc = ni.hardware.nproc;
 		enums.models[row.model] = true;
 	}
-	if(typeof ni.software != 'undefined') {
+	if(ni.software != null) {
 		var sw = ni.software;
-		if(typeof sw.autoupdater != 'undefined') {
+		if(sw.autoupdater != null) {
 			row.autoupdater = sw.autoupdater.enabled ? sw.autoupdater.branch : 'Off';
 		}
 		row.version = sw.firmware.release;
 		enums.versions[row.version] = true;
 	}
-	row.owner = typeof ni.owner != 'undefined' ? ni.owner.contact : undefined;
-	if(typeof node.statistics != 'undefined') {
+	row.owner = ni.owner != null ? ni.owner.contact : undefined;
+	if(node.statistics != null) {
 		var stats = node.statistics;
 		
 		row.clients = stats.clients;
@@ -127,7 +127,7 @@ $.each(nodes, function(i, node){
 		enums.gateways[row.gateway] = true;
 		
 		if(row.isOnline) {
-			if (stats.uptime > 0 && typeof stats.traffic != 'undefined') {
+			if (stats.uptime > 0 && stats.traffic != null) {
 				row.traFwd        = stats.traffic.forward.bytes;
 				row.traRx         = stats.traffic.rx.bytes;
 				row.traTx         = stats.traffic.tx.bytes;
@@ -142,14 +142,14 @@ $.each(nodes, function(i, node){
 			
 			row.uptime = moment().subtract(stats.uptime, 'seconds').toDate();
 		}
-		row.rootfsUsage = typeof stats.rootfs_usage != 'undefined' ? stats.rootfs_usage*100 : undefined;
-		row.memoryUsage = typeof stats.memory_usage != 'undefined' ? stats.memory_usage*100 : undefined;
+		row.rootfsUsage = stats.rootfs_usage != null ? stats.rootfs_usage*100 : undefined;
+		row.memoryUsage = stats.memory_usage != null ? stats.memory_usage*100 : undefined;
 	}
 	
 	row.firstSeen = moment.utc(node.firstseen).local().toDate();
 	row.lastSeen = moment.utc(node.lastseen).local().toDate();
 	
-	if(typeof ni.system != 'undefined') {
+	if(ni.system != null) {
 		row.site = ni.system.site_code;
 		enums.sites[row.site] = true;
 	}
@@ -163,7 +163,7 @@ var renderUptime = function(record, ind, col_ind) {
 	var color;
 	var text;
 	
-	if(typeof val == 'undefined') {
+	if(val == null) {
 		color = '#faaaaa';
 		text  = '';
 	}

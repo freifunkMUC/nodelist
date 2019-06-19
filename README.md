@@ -63,3 +63,4 @@ Questions? Ask [Skruppy](https://github.com/Skrupellos).
 | Freifunk Möhne Warstein         | [Instance](https://www.freifunk-moehne.de/knotenliste/warstein/)        | |
 | Freifunk München                | [Instance](https://onmars.eu/ffmuc/list/)                               | [Source](https://github.com/freifunkMUC/nodelist) |
 | Freifunk Nord                   | [Instance](https://mesh.nord.freifunk.net/nodelist/)                    | [Source](https://github.com/Freifunk-Nord/nord-nodelist-config) |
+| Freifunk Nordheide              | [Instance](http://karte.freifunk-nordheide.de/nodelist/)                | |
